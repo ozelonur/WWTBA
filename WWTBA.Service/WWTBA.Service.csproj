@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WWTBA.Repository\WWTBA.Repository.csproj" />
+    </ItemGroup>
+
 </Project>

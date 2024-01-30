@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "WWTBA.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/WWTBA.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WWTBA.Core.dll": {}
+        }
+      },
+      "WWTBA.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "WWTBA.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WWTBA.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WWTBA.Repository.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "WWTBA.Core/1.0.0": {
+      "type": "project",
+      "path": "../WWTBA.Core/WWTBA.Core.csproj",
+      "msbuildProject": "../WWTBA.Core/WWTBA.Core.csproj"
+    },
+    "WWTBA.Repository/1.0.0": {
+      "type": "project",
+      "path": "../WWTBA.Repository/WWTBA.Repository.csproj",
+      "msbuildProject": "../WWTBA.Repository/WWTBA.Repository.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "WWTBA.Repository >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/Users/onurozel/.nuget/packages/": {}
@@ -31,7 +68,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj": {
+              "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

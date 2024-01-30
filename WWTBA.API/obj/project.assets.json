@@ -107,6 +107,42 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "WWTBA.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/WWTBA.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WWTBA.Core.dll": {}
+        }
+      },
+      "WWTBA.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "WWTBA.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WWTBA.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WWTBA.Repository.dll": {}
+        }
+      },
+      "WWTBA.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "WWTBA.Repository": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WWTBA.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WWTBA.Service.dll": {}
+        }
       }
     }
   },
@@ -460,12 +496,28 @@
         "swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "WWTBA.Core/1.0.0": {
+      "type": "project",
+      "path": "../WWTBA.Core/WWTBA.Core.csproj",
+      "msbuildProject": "../WWTBA.Core/WWTBA.Core.csproj"
+    },
+    "WWTBA.Repository/1.0.0": {
+      "type": "project",
+      "path": "../WWTBA.Repository/WWTBA.Repository.csproj",
+      "msbuildProject": "../WWTBA.Repository/WWTBA.Repository.csproj"
+    },
+    "WWTBA.Service/1.0.0": {
+      "type": "project",
+      "path": "../WWTBA.Service/WWTBA.Service.csproj",
+      "msbuildProject": "../WWTBA.Service/WWTBA.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Microsoft.AspNetCore.OpenApi >= 7.0.15",
-      "Swashbuckle.AspNetCore >= 6.5.0"
+      "Swashbuckle.AspNetCore >= 6.5.0",
+      "WWTBA.Service >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -493,7 +545,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj": {
+              "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

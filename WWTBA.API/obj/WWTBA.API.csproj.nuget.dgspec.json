@@ -26,7 +26,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj": {
+                "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -63,6 +67,173 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.312/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Core/WWTBA.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Core/WWTBA.Core.csproj",
+        "projectName": "WWTBA.Core",
+        "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Core/WWTBA.Core.csproj",
+        "packagesPath": "/Users/onurozel/.nuget/packages/",
+        "outputPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/onurozel/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.312/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj",
+        "projectName": "WWTBA.Repository",
+        "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj",
+        "packagesPath": "/Users/onurozel/.nuget/packages/",
+        "outputPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/onurozel/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Core/WWTBA.Core.csproj": {
+                "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Core/WWTBA.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.312/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj",
+        "projectName": "WWTBA.Service",
+        "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj",
+        "packagesPath": "/Users/onurozel/.nuget/packages/",
+        "outputPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/onurozel/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj": {
+                "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/WWTBA.Repository.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
