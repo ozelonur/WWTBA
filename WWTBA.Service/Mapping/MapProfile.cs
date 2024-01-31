@@ -14,6 +14,7 @@ namespace WWTBA.Service.Mapping
             CreateMap<Answer, AnswerDto>().ReverseMap();
             CreateMap<LessonCreateDto, Lesson>();
             CreateMap<SubjectCreateDto, Subject>();
+            CreateMap<LessonUpdateDto, Lesson>();
         }
     }
 }

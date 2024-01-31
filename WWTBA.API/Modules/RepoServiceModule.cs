@@ -21,7 +21,7 @@ namespace WWTBA.API.Modules
             builder.RegisterGeneric(typeof(Service<,>)).As(typeof(IService<,>))
                 .InstancePerLifetimeScope();
 
-            // builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             // builder.RegisterType<LessonService>().As<ILessonService>().InstancePerLifetimeScope();
             // builder.RegisterType<SubjectService>().As<ISubjectService>().InstancePerLifetimeScope();
             // builder.RegisterType<QuestionService>().As<IQuestionService>().InstancePerLifetimeScope();
