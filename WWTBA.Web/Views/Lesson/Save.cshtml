@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Save";
+}
+@model LessonCreateDto
+
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Save" method="post" asp-controller="Lesson">
+            <div class="form-group">
+                <label asp-for="Name" class="d-flex justify-content-center"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group d-flex justify-content-center mt-2">
+                <input type="submit" value="Save Lesson" class="btn btn-warning text-white"/>
+            </div>
+        </form>
+    </div>
+</div>

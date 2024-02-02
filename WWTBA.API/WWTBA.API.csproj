@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
@@ -26,6 +26,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\WWTBA.Service\WWTBA.Service.csproj" />
+      <ProjectReference Include="..\WWTBA.Web\WWTBA.Web.csproj" />
     </ItemGroup>
 
 </Project>

@@ -91,3 +91,10 @@
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.API/obj/Debug/net7.0/WWTBA.API.pdb
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.API/obj/Debug/net7.0/WWTBA.API.genruntimeconfig.cache
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.API/obj/Debug/net7.0/ref/WWTBA.API.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.deps.json
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.runtimeconfig.json
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.staticwebassets.runtime.json
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.API.staticwebassets.runtime.json
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.pdb

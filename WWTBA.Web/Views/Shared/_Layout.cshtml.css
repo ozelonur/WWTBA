@@ -17,6 +17,15 @@ a {
   border-color: #1861ac;
 }
 
+.text-outline {
+  color: white; /* Text color */
+  text-shadow:
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000; /* Outline effect */
+}
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;

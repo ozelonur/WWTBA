@@ -2724,6 +2724,24 @@
         "runtime": {
           "bin/placeholder/WWTBA.Service.dll": {}
         }
+      },
+      "WWTBA.Web/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Autofac.Extensions.DependencyInjection": "9.0.0",
+          "FluentValidation.AspNetCore": "11.3.0",
+          "WWTBA.Service": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WWTBA.Web.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WWTBA.Web.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -8500,6 +8518,11 @@
       "type": "project",
       "path": "../WWTBA.Service/WWTBA.Service.csproj",
       "msbuildProject": "../WWTBA.Service/WWTBA.Service.csproj"
+    },
+    "WWTBA.Web/1.0.0": {
+      "type": "project",
+      "path": "../WWTBA.Web/WWTBA.Web.csproj",
+      "msbuildProject": "../WWTBA.Web/WWTBA.Web.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -8509,7 +8532,8 @@
       "Microsoft.AspNetCore.OpenApi >= 7.0.15",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.15",
       "Swashbuckle.AspNetCore >= 6.5.0",
-      "WWTBA.Service >= 1.0.0"
+      "WWTBA.Service >= 1.0.0",
+      "WWTBA.Web >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -8540,6 +8564,9 @@
           "projectReferences": {
             "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj": {
               "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/WWTBA.Service.csproj"
+            },
+            "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/WWTBA.Web.csproj": {
+              "projectPath": "/Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/WWTBA.Web.csproj"
             }
           }
         }

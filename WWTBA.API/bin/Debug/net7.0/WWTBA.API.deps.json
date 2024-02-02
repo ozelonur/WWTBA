@@ -13,7 +13,8 @@
           "Microsoft.AspNetCore.OpenApi": "7.0.15",
           "Microsoft.EntityFrameworkCore.Design": "7.0.15",
           "Swashbuckle.AspNetCore": "6.5.0",
-          "WWTBA.Service": "1.0.0"
+          "WWTBA.Service": "1.0.0",
+          "WWTBA.Web": "1.0.0"
         },
         "runtime": {
           "WWTBA.API.dll": {}
@@ -1490,6 +1491,16 @@
         "runtime": {
           "WWTBA.Service.dll": {}
         }
+      },
+      "WWTBA.Web/1.0.0": {
+        "dependencies": {
+          "Autofac.Extensions.DependencyInjection": "9.0.0",
+          "FluentValidation.AspNetCore": "11.3.0",
+          "WWTBA.Service": "1.0.0"
+        },
+        "runtime": {
+          "WWTBA.Web.dll": {}
+        }
       }
     }
   },
@@ -2567,6 +2578,11 @@
       "sha512": ""
     },
     "WWTBA.Service/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WWTBA.Web/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

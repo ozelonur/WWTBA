@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using WWTBA.API.Filters;
 using WWTBA.API.Middlewares;
 using WWTBA.API.Modules;
+using WWTBA.Core.DTOs;
 using WWTBA.Repository;
 using WWTBA.Service.Mapping;
 using WWTBA.Service.Validations;
@@ -23,6 +24,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<LessonValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<SubjectValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<QuestionValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<AnswerValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LessonCreateDtoValidator>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

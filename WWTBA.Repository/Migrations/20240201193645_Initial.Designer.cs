@@ -12,7 +12,7 @@ using WWTBA.Repository;
 namespace WWTBA.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240130233117_Initial")]
+    [Migration("20240201193645_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
