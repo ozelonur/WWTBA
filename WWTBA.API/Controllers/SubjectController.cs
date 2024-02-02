@@ -15,6 +15,12 @@ namespace WWTBA.API.Controllers
             _service = service;
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetSubjectsWithLesson()
+        {
+            return CreateActionResult(await _service.GetSubjectsWithDto());
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

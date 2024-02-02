@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Save";
+}
+@model SubjectDto
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Save" method="post" asp-controller="Subject">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LessonId"></label>
+                <select asp-for="LessonId" class="form-control">
+                    <option value="">Seçiniz</option>
+                    @foreach (dynamic lesson in ViewBag.lessons)
+                    {
+                        <option value="@lesson.Value">@lesson.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="LessonId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>

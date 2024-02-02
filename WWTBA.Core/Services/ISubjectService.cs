@@ -7,6 +7,8 @@ namespace WWTBA.Core.Services
     {
         Task<CustomResponseDto<SubjectDto>> AddAsync(SubjectCreateDto dto);
         Task<CustomResponseDto<SubjectDto>> UpdateAsync(SubjectUpdateDto dto);
+
+        Task<CustomResponseDto<List<SubjectWithLessonDto>>> GetSubjectsWithDto();
     }
 }
 

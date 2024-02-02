@@ -10,8 +10,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<LessonCreateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<SubjectCreateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<SubjectUpdateDtoValidator>();
 
 builder.Services.AddHttpClient<LessonApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+
+builder.Services.AddHttpClient<SubjectApiService>(opt =>
 {
     opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
 });

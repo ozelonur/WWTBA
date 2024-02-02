@@ -36,5 +36,12 @@ namespace WWTBA.Service.Services
             SubjectDto newDto = _mapper.Map<SubjectDto>(newEntity);
             return CustomResponseDto<SubjectDto>.Success(StatusCodes.Status200OK, newDto);
         }
+
+        public async Task<CustomResponseDto<List<SubjectWithLessonDto>>> GetSubjectsWithDto()
+        {
+            List<Subject> subjects = await _subjectRepository.GetSubjectsWithLessonAsync();
+            List<SubjectWithLessonDto> subjectsDto = _mapper.Map<List<SubjectWithLessonDto>>(subjects);
+            return CustomResponseDto<List<SubjectWithLessonDto>>.Success(StatusCodes.Status200OK, subjectsDto);
+        }
     }
 }
