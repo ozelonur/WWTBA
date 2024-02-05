@@ -7,4 +7,3 @@ namespace WWTBA.Core.DTOs
         public int QuestionId { get; set; }
     }
 }
-

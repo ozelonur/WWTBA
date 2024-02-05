@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "Save";
+}
+@model QuestionCreateViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Save" method="post" asp-controller="Question">
+            <div class="form-group">
+                <label asp-for="QuestionCreateDto.SubjectId"></label>
+                <select asp-for="QuestionCreateDto.SubjectId" class="form-group">
+                    <option value="">Seçiniz</option>
+                    @foreach (dynamic subject in ViewBag.subjects)
+                    {
+                        <option value="@subject.Value">@subject.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="QuestionCreateDto.SubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionCreateDto.QuestionText"></label>
+                <input asp-for="QuestionCreateDto.QuestionText" class="form-control"/>
+                <span asp-validation-for="QuestionCreateDto.QuestionText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionCreateDto.Explanation"></label>
+                <input asp-for="QuestionCreateDto.Explanation" class="form-control"/>
+                <span asp-validation-for="QuestionCreateDto.Explanation" class="text-danger"></span>
+            </div>
+            
+            
+
+            <div class="form-group">
+                <label asp-for="AnswerCreateDtos[0].AnswerText">Answer One Text</label>
+                <input asp-for="AnswerCreateDtos[0].AnswerText" class="form-control"/>
+
+                <label asp-for="AnswerCreateDtos[0].IsCorrect">Is Correct?</label>
+                <!-- Toggle switch for true/false -->
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" asp-for="AnswerCreateDtos[0].IsCorrect">
+                    <label class="custom-control-label" for="customSwitch1">Toggle for True/False</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerCreateDtos[1].AnswerText">Answer Two Text</label>
+                <input asp-for="AnswerCreateDtos[1].AnswerText" class="form-control"/>
+
+                <label asp-for="AnswerCreateDtos[1].IsCorrect">Is Correct?</label>
+                <!-- Toggle switch for true/false -->
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch2" asp-for="AnswerCreateDtos[1].IsCorrect">
+                    <label class="custom-control-label" for="customSwitch2">Toggle for True/False</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerCreateDtos[2].AnswerText">Answer Three Text</label>
+                <input asp-for="AnswerCreateDtos[2].AnswerText" class="form-control"/>
+
+                <label asp-for="AnswerCreateDtos[2].IsCorrect">Is Correct?</label>
+                <!-- Toggle switch for true/false -->
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch3" asp-for="AnswerCreateDtos[2].IsCorrect">
+                    <label class="custom-control-label" for="customSwitch3">Toggle for True/False</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerCreateDtos[3].AnswerText">Answer Four Text</label>
+                <input asp-for="AnswerCreateDtos[3].AnswerText" class="form-control"/>
+
+                <label asp-for="AnswerCreateDtos[3].IsCorrect">Is Correct?</label>
+                <!-- Toggle switch for true/false -->
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch4" asp-for="AnswerCreateDtos[3].IsCorrect">
+                    <label class="custom-control-label" for="customSwitch4">Toggle for True/False</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn-primary"/>
+            </div>
+
+        </form>
+    </div>
+</div>

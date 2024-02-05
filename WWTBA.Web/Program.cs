@@ -9,9 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<LessonValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<LessonCreateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LessonUpdateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<SubjectValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<SubjectCreateDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<SubjectUpdateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<QuestionValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<QuestionCreateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<QuestionUpdateDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<AnswerValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<AnswerCreateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<AnswerUpdateValidator>();
 
 builder.Services.AddHttpClient<LessonApiService>(opt =>
 {
@@ -19,6 +28,16 @@ builder.Services.AddHttpClient<LessonApiService>(opt =>
 });
 
 builder.Services.AddHttpClient<SubjectApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+
+builder.Services.AddHttpClient<QuestionApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+
+builder.Services.AddHttpClient<AnswerApiService>(opt =>
 {
     opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
 });

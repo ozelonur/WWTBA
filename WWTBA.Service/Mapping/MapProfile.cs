@@ -17,6 +17,11 @@ namespace WWTBA.Service.Mapping
             CreateMap<LessonUpdateDto, Lesson>();
             CreateMap<SubjectUpdateDto, Subject>();
             CreateMap<Subject, SubjectWithLessonDto>();
+            CreateMap<QuestionCreateDto, Question>();
+            CreateMap<QuestionUpdateDto, Question>();
+            CreateMap<AnswerCreateDto, Answer>();
+            CreateMap<AnswerUpdateDto, Answer>();
+            CreateMap<Question, QuestionWithAnswersDto>();
         }
     }
 }

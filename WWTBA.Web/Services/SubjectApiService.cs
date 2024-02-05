@@ -55,6 +55,13 @@ namespace WWTBA.Web.Services
 
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<List<SubjectDto>> GetAllAsync()
+        {
+            CustomResponseDto<List<SubjectDto>> response =
+                await _client.GetFromJsonAsync<CustomResponseDto<List<SubjectDto>>>("subject");
+            return response.Data;
+        }
     }
 }
 
