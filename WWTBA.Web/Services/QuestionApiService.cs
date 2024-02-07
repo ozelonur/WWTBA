@@ -15,13 +15,13 @@ namespace WWTBA.Web.Services
         {
             CustomResponseDto<List<QuestionWithAnswersDto>> response =
                 await _client.GetFromJsonAsync<CustomResponseDto<List<QuestionWithAnswersDto>>>(
-                    "question/GetQuestionWithAnswers");
+                    "questions/GetQuestionWithAnswers");
             return response.Data;
         }
 
         public async Task<QuestionDto> AddAsync(QuestionCreateDto dto)
         {
-            HttpResponseMessage response = await _client.PostAsJsonAsync("question", dto);
+            HttpResponseMessage response = await _client.PostAsJsonAsync("questions", dto);
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -34,26 +34,26 @@ namespace WWTBA.Web.Services
         public async Task<List<QuestionDto>> GetAllAsync()
         {
             CustomResponseDto<List<QuestionDto>> response =
-                await _client.GetFromJsonAsync<CustomResponseDto<List<QuestionDto>>>("question");
+                await _client.GetFromJsonAsync<CustomResponseDto<List<QuestionDto>>>("questions");
             return response.Data;
         }
 
-        public async Task<QuestionDto> GetByIdAsync(int id)
+        public async Task<QuestionUpdateDto> GetByIdAsync(int id)
         {
-            CustomResponseDto<QuestionDto> response =
-                await _client.GetFromJsonAsync<CustomResponseDto<QuestionDto>>($"question/{id}");
+            CustomResponseDto<QuestionUpdateDto> response =
+                await _client.GetFromJsonAsync<CustomResponseDto<QuestionUpdateDto>>($"questions/{id}");
             return response.Data;
         }
 
         public async Task<bool> UpdateAsync(QuestionUpdateDto dto)
         {
-            HttpResponseMessage response = await _client.PutAsJsonAsync("question", dto);
+            HttpResponseMessage response = await _client.PutAsJsonAsync("questions", dto);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> RemoveAsync(int id)
         {
-            HttpResponseMessage response = await _client.DeleteAsync($"question/{id}");
+            HttpResponseMessage response = await _client.DeleteAsync($"questions/{id}");
             return response.IsSuccessStatusCode;
         }
 
@@ -61,7 +61,7 @@ namespace WWTBA.Web.Services
         {
             CustomResponseDto<IEnumerable<QuestionDto>> responseDto =
                 await _client.GetFromJsonAsync<CustomResponseDto<IEnumerable<QuestionDto>>>(
-                    $"question/GetQuestionsToASingleSubject/{subjectId}");
+                    $"questions/GetQuestionsToASingleSubject/{subjectId}");
             return responseDto.Data;
         }
     }

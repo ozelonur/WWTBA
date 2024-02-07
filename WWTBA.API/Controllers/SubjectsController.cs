@@ -6,11 +6,11 @@ using WWTBA.Core.Services;
 
 namespace WWTBA.API.Controllers
 {
-    public class SubjectController : CustomBaseController
+    public class SubjectsController : CustomBaseController
     {
         private readonly ISubjectService _service;
 
-        public SubjectController(ISubjectService service)
+        public SubjectsController(ISubjectService service)
         {
             _service = service;
         }

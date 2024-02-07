@@ -6,11 +6,11 @@ using WWTBA.Core.Services;
 
 namespace WWTBA.API.Controllers;
 
-public class AnswerController : CustomBaseController
+public class AnswersController : CustomBaseController
 {
     private readonly IAnswerService _answerService;
 
-    public AnswerController(IAnswerService answerService)
+    public AnswersController(IAnswerService answerService)
     {
         _answerService = answerService;
     }
@@ -21,14 +21,13 @@ public class AnswerController : CustomBaseController
         return CreateActionResult(await _answerService.AddAsync(dto));
     }
 
-    [ServiceFilter(typeof(Web.Filters.NotFoundFilter<Answer, AnswerDto>))]
+    [ServiceFilter(typeof(NotFoundFilter<Answer, AnswerDto>))]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         return CreateActionResult(await _answerService.GetByIdAsync(id));
     }
 
-    [ServiceFilter(typeof(NotFoundFilter<Answer, AnswerUpdateDto>))]
     [HttpPut]
     public async Task<IActionResult> Update(AnswerUpdateDto dto)
     {
@@ -58,5 +57,11 @@ public class AnswerController : CustomBaseController
     public async Task<IActionResult> RemoveAll(List<int> ids)
     {
         return CreateActionResult(await _answerService.RemoveRangeAsync(ids));
+    }
+    
+    [HttpGet("[action]/{questionId}")]
+    public async Task<IActionResult> GetAnswersToASingleQuestion(int questionId)
+    {
+        return CreateActionResult(await _answerService.Where(x => x.QuestionId == questionId));
     }
 }

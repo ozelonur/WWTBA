@@ -6,11 +6,11 @@ using WWTBA.Core.Services;
 
 namespace WWTBA.API.Controllers
 {
-    public class QuestionController : CustomBaseController
+    public class QuestionsController : CustomBaseController
     {
         private readonly IQuestionService _questionService;
 
-        public QuestionController(IQuestionService questionService)
+        public QuestionsController(IQuestionService questionService)
         {
             _questionService = questionService;
         }
@@ -47,7 +47,6 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(await _questionService.GetByIdAsync(id));
         }
 
-        [ServiceFilter(typeof(NotFoundFilter<Question, QuestionUpdateDto>))]
         [HttpPut]
         public async Task<IActionResult> Update(QuestionUpdateDto dto)
         {

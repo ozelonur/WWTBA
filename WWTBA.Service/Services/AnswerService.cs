@@ -28,13 +28,12 @@ namespace WWTBA.Service.Services
             return CustomResponseDto<AnswerDto>.Success(StatusCodes.Status200OK, newDto);
         }
 
-        public async Task<CustomResponseDto<AnswerDto>> UpdateAsync(AnswerUpdateDto dto)
+        public async Task<CustomResponseDto<NoContentDto>> UpdateAsync(AnswerUpdateDto dto)
         {
             Answer newEntity = _mapper.Map<Answer>(dto);
             _answerRepository.Update(newEntity);
             await _unitOfWork.CommitAsync();
-            AnswerDto newDto = _mapper.Map<AnswerDto>(newEntity);
-            return CustomResponseDto<AnswerDto>.Success(StatusCodes.Status200OK, newDto);
+            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
 
         public async Task<CustomResponseDto<List<AnswerDto>>> AddRangeAsync(List<AnswerCreateDto> dto)

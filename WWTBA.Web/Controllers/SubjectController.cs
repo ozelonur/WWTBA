@@ -68,9 +68,10 @@ namespace WWTBA.Web.Controllers
             return View(subject);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Update(SubjectUpdateDto dto)
         {
+            int id = dto.Id;
             if (ModelState.IsValid)
             {
                 await _subjectApiService.UpdateAsync(dto);

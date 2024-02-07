@@ -13,7 +13,7 @@ namespace WWTBA.Web.Services
 
         public async Task<List<AnswerDto>> AddRangeAsync(List<AnswerCreateDto> dtos)
         {
-            HttpResponseMessage response = await _client.PostAsJsonAsync("answer/SaveAll", dtos);
+            HttpResponseMessage response = await _client.PostAsJsonAsync("answers/SaveAll", dtos);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -24,6 +24,19 @@ namespace WWTBA.Web.Services
                 await response.Content.ReadFromJsonAsync<CustomResponseDto<List<AnswerDto>>>();
             return responseBody.Data;
         }
+
+        public async Task<bool> UpdateAsync(AnswerUpdateDto dto)
+        {
+            HttpResponseMessage response = await _client.PutAsJsonAsync("answers", dto);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<IEnumerable<AnswerUpdateDto>> Where(int questionId)
+        {
+            CustomResponseDto<IEnumerable<AnswerUpdateDto>> responseDto =
+                await _client.GetFromJsonAsync<CustomResponseDto<IEnumerable<AnswerUpdateDto>>>(
+                    $"answers/GetAnswersToASingleQuestion/{questionId}");
+            return responseDto.Data;
+        }
     }
 }
-

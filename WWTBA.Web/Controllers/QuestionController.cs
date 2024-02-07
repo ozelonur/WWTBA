@@ -47,12 +47,49 @@ namespace WWTBA.Web.Controllers
                 {
                     dto.QuestionId = questionDto.Id;
                 }
+
                 await _answerApiService.AddRangeAsync(model.AnswerCreateDtos);
                 return RedirectToAction(nameof(Index));
             }
+
             List<SubjectDto> subjects = await _subjectApiService.GetAllAsync();
             ViewBag.subjects = new SelectList(subjects, "Id", "Name");
             return View();
+        }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            QuestionUpdateDto question = await _questionApiService.GetByIdAsync(id);
+            IEnumerable<AnswerUpdateDto> answers = await _answerApiService.Where(id);
+            QuestionUpdateViewModel model = new()
+                { QuestionUpdateDto = question, AnswerUpdateDtos = answers.ToList() };
+            IEnumerable<SubjectDto> subjects = await _subjectApiService.GetAllAsync();
+
+            ViewBag.subjects = new SelectList(subjects, "Id", "Name", question.SubjectId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(QuestionUpdateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _questionApiService.UpdateAsync(model.QuestionUpdateDto);
+                foreach (AnswerUpdateDto dto in model.AnswerUpdateDtos)
+                {
+                    dto.QuestionId = model.QuestionUpdateDto.Id;
+                    await _answerApiService.UpdateAsync(dto);
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            IEnumerable<SubjectDto> subjects = await _subjectApiService.GetAllAsync();
+
+            ViewBag.subjects = new SelectList(subjects, "Id", "Name", model.QuestionUpdateDto.SubjectId);
+
+            return View(model);
         }
     }
 }
