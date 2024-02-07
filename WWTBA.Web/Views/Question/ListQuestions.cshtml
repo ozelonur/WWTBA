@@ -24,11 +24,11 @@
             <td class="custom-dark-blue text-white">@item.CreatedDate</td>
             <td>
                 <a class="btn btn-warning custom-dark-blue text-white" asp-controller="Question" asp-action="Update" asp-route-id="@item.Id">Update</a>
-                @* <a class="btn btn-danger custom-dark-blue text-white" asp-controller="Question" asp-action="Remove" asp-route-id="@item.Id">Delete</a> *@
+                <a class="btn btn-danger custom-dark-blue text-white" asp-controller="Question" asp-action="Remove" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }
     </tbody>
 </table>
 
-<a class="btn btn-primary d-flex justify-content-center custom-dark-blue text-white" asp-controller="Question" asp-action="Save">Add Subject</a>
+<a class="btn btn-primary d-flex justify-content-center custom-dark-blue text-white" asp-controller="Question" asp-action="Save">Add Question</a>

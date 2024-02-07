@@ -91,5 +91,25 @@ namespace WWTBA.Web.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+            int subjectId = (await _questionApiService.GetByIdAsync(id)).SubjectId;
+
+            await _questionApiService.RemoveAsync(id);
+
+            IEnumerable<AnswerUpdateDto> answers = await _answerApiService.Where(id);
+
+            foreach (AnswerUpdateDto answer in answers)
+            {
+                await _answerApiService.RemoveAsync(answer.Id);
+            }
+
+            IEnumerable<QuestionDto> dto = await _questionApiService.Where(subjectId);
+
+            return dto.ToList().Count > 0
+                ? RedirectToAction(nameof(ListQuestions))
+                : RedirectToAction(nameof(Index), "Subject");
+        }
     }
 }

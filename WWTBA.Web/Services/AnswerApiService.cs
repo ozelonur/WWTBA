@@ -38,5 +38,11 @@ namespace WWTBA.Web.Services
                     $"answers/GetAnswersToASingleQuestion/{questionId}");
             return responseDto.Data;
         }
+        
+        public async Task<bool> RemoveAsync(int id)
+        {
+            HttpResponseMessage response = await _client.DeleteAsync($"answers/{id}");
+            return response.IsSuccessStatusCode;
+        }
     }
 }
