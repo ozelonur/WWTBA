@@ -31,6 +31,13 @@ namespace WWTBA.Web.Services
             return responseBody.Data;
         }
 
+        public async Task<List<QuestionDto>> GetAllAsync()
+        {
+            CustomResponseDto<List<QuestionDto>> response =
+                await _client.GetFromJsonAsync<CustomResponseDto<List<QuestionDto>>>("question");
+            return response.Data;
+        }
+
         public async Task<QuestionDto> GetByIdAsync(int id)
         {
             CustomResponseDto<QuestionDto> response =
@@ -48,6 +55,14 @@ namespace WWTBA.Web.Services
         {
             HttpResponseMessage response = await _client.DeleteAsync($"question/{id}");
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<IEnumerable<QuestionDto>> Where(int subjectId)
+        {
+            CustomResponseDto<IEnumerable<QuestionDto>> responseDto =
+                await _client.GetFromJsonAsync<CustomResponseDto<IEnumerable<QuestionDto>>>(
+                    $"question/GetQuestionsToASingleSubject/{subjectId}");
+            return responseDto.Data;
         }
     }
 }

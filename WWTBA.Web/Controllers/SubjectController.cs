@@ -19,7 +19,18 @@ namespace WWTBA.Web.Controllers
         // GET
         public async Task<IActionResult> Index()
         {
-            return View(await _subjectApiService.GetSubjectsWithLessonDto());
+            List<SubjectWithQuestionCountModel> list = new();
+            foreach (SubjectWithLessonDto item in await _subjectApiService.GetSubjectsWithLessonDto())
+            {
+                SubjectWithQuestionCountModel model = new SubjectWithQuestionCountModel()
+                {
+                    QuestionCount = await _subjectApiService.GetQuestionCountOfASubject(item.Id),
+                    SubjectWithLessonDto = item
+                };
+                
+                list.Add(model);
+            }
+            return View(list);
         }
 
         public async Task<IActionResult> Save()

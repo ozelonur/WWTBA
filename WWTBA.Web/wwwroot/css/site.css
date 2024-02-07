@@ -1,22 +1,67 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.25rem #00072D; /* Dark blue focus color without white */
 }
 
+/* CSS for non-hover state */
+.dropdown-item.custom-dark-blue.text-white {
+    background-color: #003970; /* Or any other color you've chosen for your custom dark blue */
+    color: white; /* Text color */
+    /* ... other styles ... */
+}
+
+/* CSS for hover state */
+.dropdown-item.custom-dark-blue.text-white:hover {
+    background-color: #00072D; /* Darker blue for hover state */
+    color: white; /* Maintain text color for readability */
+    /* ... other styles you want to apply on hover ... */
+}
+
+.dropdown-menu.custom-dark-blue.text-white {
+    background-color: #003970; /* Or any other color you've chosen for your custom dark blue */
+    color: white; /* Text color */
+    /* ... other styles ... */
+}
+
+.dropdown-menu.custom-dark-blue.text-white:hover {
+    background-color: #00072D; /* Or any other color you've chosen for your custom dark blue */
+    color: white; /* Text color */
+    /* ... other styles ... */
+}
+
+.nav-link.dropdown.custom-dark-blue.text-white {
+  background-color: #003970; /* Or any other color you've chosen for your custom dark blue */
+  color: white; /* Text color */
+  /* ... other styles ... */
+}
+
+.nav-link.dropdown.custom-dark-blue.text-white:hover {
+  background-color: #00072D; /* Or any other color you've chosen for your custom dark blue */
+  color: white; /* Text color */
+  /* ... other styles ... */
+}
+
+
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #00072D;
+    color: #ffffff;
+    margin-bottom: 60px;
+}
+
+.custom-dark-blue {
+    background-color: #00072D !important; /* Using !important to override Bootstrap's styles if necessary */
 }

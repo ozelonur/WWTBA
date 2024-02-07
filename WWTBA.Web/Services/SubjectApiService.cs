@@ -19,6 +19,7 @@ namespace WWTBA.Web.Services
 
             return response.Data;
         }
+        
 
         public async Task<SubjectDto> AddAsync(SubjectCreateDto dto)
         {
@@ -39,6 +40,15 @@ namespace WWTBA.Web.Services
         {
             CustomResponseDto<SubjectUpdateDto> response =
                 await _client.GetFromJsonAsync<CustomResponseDto<SubjectUpdateDto>>($"subject/{id}");
+            return response.Data;
+        }
+
+        public async Task<int> GetQuestionCountOfASubject(int subjectId)
+        {
+            CustomResponseDto<int> response =
+                await _client.GetFromJsonAsync<CustomResponseDto<int>>(
+                    $"subject/GetQuestionCountOfASubject/{subjectId}");
+
             return response.Data;
         }
         

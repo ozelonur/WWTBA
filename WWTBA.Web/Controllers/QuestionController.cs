@@ -11,7 +11,8 @@ namespace WWTBA.Web.Controllers
         private readonly AnswerApiService _answerApiService;
         private readonly SubjectApiService _subjectApiService;
 
-        public QuestionController(QuestionApiService questionApiService, AnswerApiService answerApiService, SubjectApiService subjectApiService)
+        public QuestionController(QuestionApiService questionApiService, AnswerApiService answerApiService,
+            SubjectApiService subjectApiService)
         {
             _questionApiService = questionApiService;
             _answerApiService = answerApiService;
@@ -19,17 +20,20 @@ namespace WWTBA.Web.Controllers
         }
 
         // GET
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _questionApiService.GetAllAsync());
+        }
+
+        public async Task<IActionResult> ListQuestions(int id)
+        {
+            return View(await _questionApiService.Where(id));
         }
 
         public async Task<IActionResult> Save()
         {
             List<SubjectDto> subjects = await _subjectApiService.GetAllAsync();
-
             ViewBag.subjects = new SelectList(subjects, "Id", "Name");
-
             return View();
         }
 
@@ -43,16 +47,11 @@ namespace WWTBA.Web.Controllers
                 {
                     dto.QuestionId = questionDto.Id;
                 }
-
                 await _answerApiService.AddRangeAsync(model.AnswerCreateDtos);
-
                 return RedirectToAction(nameof(Index));
             }
-            
             List<SubjectDto> subjects = await _subjectApiService.GetAllAsync();
-
             ViewBag.subjects = new SelectList(subjects, "Id", "Name");
-
             return View();
         }
     }

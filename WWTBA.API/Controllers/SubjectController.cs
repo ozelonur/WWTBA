@@ -21,6 +21,12 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(await _service.GetSubjectsWithDto());
         }
 
+        [HttpGet("[action]/{subjectId}")]
+        public async Task<IActionResult> GetQuestionCountOfASubject(int subjectId)
+        {
+            return CreateActionResult(await _service.GetQuestionCountOfASubject(subjectId));
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

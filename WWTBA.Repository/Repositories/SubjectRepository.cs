@@ -14,6 +14,11 @@ namespace WWTBA.Repository.Repositories
         {
             return await context.Subjects.Include(x => x.Lesson).ToListAsync();
         }
+
+        public async Task<Subject> GetSubjectWithQuestionsAsync(int subjectId)
+        {
+            return await context.Subjects.Include(x => x.Questions).Where(x => x.Id == subjectId)
+                .SingleOrDefaultAsync();
+        }
     }
 }
-

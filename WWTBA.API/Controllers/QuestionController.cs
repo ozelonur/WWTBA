@@ -28,6 +28,12 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(await _questionService.GetAllAsync());
         }
 
+        [HttpGet("[action]/{subjectId}")]
+        public async Task<IActionResult> GetQuestionsToASingleSubject(int subjectId)
+        {
+            return CreateActionResult(await _questionService.Where(x => x.SubjectId == subjectId));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(QuestionCreateDto question)
         {
