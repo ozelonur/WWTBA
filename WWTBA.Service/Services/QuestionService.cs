@@ -24,9 +24,17 @@ namespace WWTBA.Service.Services
             Question newEntity = _mapper.Map<Question>(dto);
             await _questionRepository.AddAsync(newEntity);
             await _unitOfWork.CommitAsync();
-
             QuestionDto newDto = _mapper.Map<QuestionDto>(newEntity);
             return CustomResponseDto<QuestionDto>.Success(StatusCodes.Status200OK, newDto);
+        }
+
+        public async Task<CustomResponseDto<IEnumerable<QuestionDto>>> AddRangeAsync(IEnumerable<QuestionCreateDto> dtos)
+        {
+            IEnumerable<Question> newEntities = _mapper.Map<IEnumerable<Question>>(dtos);
+            await _questionRepository.AddRangeAsync(newEntities);
+            await _unitOfWork.CommitAsync();
+            IEnumerable<QuestionDto> newDtos = _mapper.Map<IEnumerable<QuestionDto>>(newEntities);
+            return CustomResponseDto<IEnumerable<QuestionDto>>.Success(StatusCodes.Status200OK, newDtos);
         }
 
         public async Task<CustomResponseDto<NoContentDto>> UpdateAsync(QuestionUpdateDto dto)

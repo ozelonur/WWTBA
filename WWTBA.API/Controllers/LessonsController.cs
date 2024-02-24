@@ -20,6 +20,12 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _service.GetAllAsync());
         }
+        
+        [HttpGet("[action]/{lessonId}")]
+        public async Task<IActionResult> GetSubjectCountOfALesson(int lessonId)
+        {
+            return CreateActionResult(await _service.GetSubjectCountOfALesson(lessonId));
+        }
 
         [ServiceFilter(typeof(NotFoundFilter<Lesson, LessonDto>))]
         [HttpGet("{id}")]

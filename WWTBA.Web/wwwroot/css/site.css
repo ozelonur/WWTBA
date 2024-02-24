@@ -50,6 +50,13 @@ html {
   /* ... other styles ... */
 }
 
+.space-below{
+    margin-bottom: 20px;
+}
+.space-above{
+    margin-top: 20px;
+}
+
 
 html {
     position: relative;

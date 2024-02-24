@@ -3,6 +3,8 @@
 }
 @model List<QuestionDto>
 
+<a class="btn btn-primary d-flex justify-content-center custom-dark-blue text-white" asp-controller="Question" asp-action="Save">Add Subject</a>
+
 <table class="table table-striped custom-dark-blue text-white">
     <thead>
     <tr>
@@ -30,5 +32,3 @@
     }
     </tbody>
 </table>
-
-<a class="btn btn-primary d-flex justify-content-center custom-dark-blue text-white" asp-controller="Question" asp-action="Save">Add Subject</a>

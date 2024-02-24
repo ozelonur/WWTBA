@@ -37,6 +37,15 @@ namespace WWTBA.Web.Services
             return response.Data;
         }
         
+        public async Task<int> GetSubjectCountOfALesson(int lessonId)
+        {
+            CustomResponseDto<int> response =
+                await _client.GetFromJsonAsync<CustomResponseDto<int>>(
+                    $"lessons/GetSubjectCountOfALesson/{lessonId}");
+
+            return response.Data;
+        }
+        
         public async Task<bool> UpdateAsync(LessonDto lessonDto)
         {
             HttpResponseMessage response = await _client.PutAsJsonAsync("lessons", lessonDto);

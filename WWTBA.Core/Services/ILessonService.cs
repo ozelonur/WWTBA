@@ -7,6 +7,7 @@ namespace WWTBA.Core.Services
     {
         Task<CustomResponseDto<LessonDto>> AddAsync(LessonCreateDto dto);
         Task<CustomResponseDto<LessonDto>> UpdateAsync(LessonUpdateDto dto);
+        Task<CustomResponseDto<int>> GetSubjectCountOfALesson(int lessonId);
     }
 }
 

@@ -20,6 +20,14 @@ namespace WWTBA.Web.Services
             return response.Data;
         }
         
+        public async Task<IEnumerable<SubjectDto>> Where(int lessonId)
+        {
+            CustomResponseDto<IEnumerable<SubjectDto>> responseDto =
+                await _client.GetFromJsonAsync<CustomResponseDto<IEnumerable<SubjectDto>>>(
+                    $"subjects/GetSubjectsToASingleLesson/{lessonId}");
+            return responseDto.Data;
+        }
+        
 
         public async Task<SubjectDto> AddAsync(SubjectCreateDto dto)
         {

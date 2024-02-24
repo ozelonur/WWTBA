@@ -49,7 +49,11 @@ namespace WWTBA.Web.Controllers
                 }
 
                 await _answerApiService.AddRangeAsync(model.AnswerCreateDtos);
-                return RedirectToAction(nameof(Index));
+                
+                List<SubjectDto> subjectsValue = await _subjectApiService.GetAllAsync();
+                ViewBag.subjects = new SelectList(subjectsValue, "Id", "Name");
+
+                return RedirectToAction(nameof(Save));
             }
 
             List<SubjectDto> subjects = await _subjectApiService.GetAllAsync();

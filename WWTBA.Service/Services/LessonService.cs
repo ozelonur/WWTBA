@@ -36,5 +36,11 @@ namespace WWTBA.Service.Services
             LessonDto newDto = _mapper.Map<LessonDto>(newEntity);
             return CustomResponseDto<LessonDto>.Success(StatusCodes.Status200OK, newDto);
         }
+
+        public async Task<CustomResponseDto<int>> GetSubjectCountOfALesson(int lessonId)
+        {
+            Lesson lesson = await _lessonRepository.GetLessonWithQuestionsAsync(lessonId);
+            return CustomResponseDto<int>.Success(StatusCodes.Status200OK, lesson.Subjects.Count);
+        }
     }
 }

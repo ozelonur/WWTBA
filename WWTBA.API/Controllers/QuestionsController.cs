@@ -9,10 +9,12 @@ namespace WWTBA.API.Controllers
     public class QuestionsController : CustomBaseController
     {
         private readonly IQuestionService _questionService;
+        private readonly IAnswerService _answerService;
 
-        public QuestionsController(IQuestionService questionService)
+        public QuestionsController(IQuestionService questionService, IAnswerService answerService)
         {
             _questionService = questionService;
+            _answerService = answerService;
         }
 
         [ServiceFilter(typeof(NotFoundFilter<Question, QuestionWithAnswersDto>))]
@@ -38,6 +40,21 @@ namespace WWTBA.API.Controllers
         public async Task<IActionResult> Add(QuestionCreateDto question)
         {
             return CreateActionResult(await _questionService.AddAsync(question));
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddRangeWithAnswers(IEnumerable<QuestionCreateViewModel> models)
+        {
+            foreach (QuestionCreateViewModel model in models)
+            {
+                QuestionDto dto = _questionService.AddAsync(model.QuestionCreateDto).Result.Data;
+                foreach (AnswerCreateDto answerDto in model.AnswerCreateDtos)
+                {
+                    answerDto.QuestionId = dto.Id;
+                    await _answerService.AddAsync(answerDto);
+                }
+            }
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK));
         }
 
         [ServiceFilter(typeof(NotFoundFilter<Question, QuestionDto>))]

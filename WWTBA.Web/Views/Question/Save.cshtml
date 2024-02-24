@@ -3,11 +3,11 @@
 }
 @model QuestionCreateViewModel
 
-<div class="row">
-    <div class="col-md-6">
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6 d-flex justify-content-center">
         <form asp-action="Save" method="post" asp-controller="Question">
             <div class="form-group">
-                <label asp-for="QuestionCreateDto.SubjectId"></label>
+                <label class="d-flex justify-content-center" asp-for="QuestionCreateDto.SubjectId"></label>
                 <select asp-for="QuestionCreateDto.SubjectId" class="form-group">
                     <option value="">Seçiniz</option>
                     @foreach (dynamic subject in ViewBag.subjects)
@@ -18,65 +18,76 @@
                 <span asp-validation-for="QuestionCreateDto.SubjectId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="QuestionCreateDto.QuestionText"></label>
+                <label class="d-flex justify-content-center" asp-for="QuestionCreateDto.QuestionText"></label>
                 <input asp-for="QuestionCreateDto.QuestionText" class="form-control"/>
                 <span asp-validation-for="QuestionCreateDto.QuestionText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="QuestionCreateDto.Explanation"></label>
+                <label class="d-flex justify-content-center" asp-for="QuestionCreateDto.Explanation"></label>
                 <input asp-for="QuestionCreateDto.Explanation" class="form-control"/>
                 <span asp-validation-for="QuestionCreateDto.Explanation" class="text-danger"></span>
             </div>
-            
-            
+
 
             <div class="form-group">
-                <label asp-for="AnswerCreateDtos[0].AnswerText">Answer One Text</label>
+                <label class="d-flex justify-content-center" asp-for="AnswerCreateDtos[0].AnswerText">A</label>
                 <input asp-for="AnswerCreateDtos[0].AnswerText" class="form-control"/>
 
                 <label asp-for="AnswerCreateDtos[0].IsCorrect">Is Correct?</label>
                 <!-- Toggle switch for true/false -->
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch1" asp-for="AnswerCreateDtos[0].IsCorrect">
-                    <label class="custom-control-label" for="customSwitch1">Toggle for True/False</label>
+                    <label class="custom-control-label" for="customSwitch1"></label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="AnswerCreateDtos[1].AnswerText">Answer Two Text</label>
+                <label class="d-flex justify-content-center" asp-for="AnswerCreateDtos[1].AnswerText">B</label>
                 <input asp-for="AnswerCreateDtos[1].AnswerText" class="form-control"/>
 
                 <label asp-for="AnswerCreateDtos[1].IsCorrect">Is Correct?</label>
                 <!-- Toggle switch for true/false -->
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch2" asp-for="AnswerCreateDtos[1].IsCorrect">
-                    <label class="custom-control-label" for="customSwitch2">Toggle for True/False</label>
+                    <label class="custom-control-label" for="customSwitch2"></label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="AnswerCreateDtos[2].AnswerText">Answer Three Text</label>
+                <label class="d-flex justify-content-center" asp-for="AnswerCreateDtos[2].AnswerText">C</label>
                 <input asp-for="AnswerCreateDtos[2].AnswerText" class="form-control"/>
 
                 <label asp-for="AnswerCreateDtos[2].IsCorrect">Is Correct?</label>
                 <!-- Toggle switch for true/false -->
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch3" asp-for="AnswerCreateDtos[2].IsCorrect">
-                    <label class="custom-control-label" for="customSwitch3">Toggle for True/False</label>
+                    <label class="custom-control-label" for="customSwitch3"></label>
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="AnswerCreateDtos[3].AnswerText">Answer Four Text</label>
+                <label class="d-flex justify-content-center" asp-for="AnswerCreateDtos[3].AnswerText">D</label>
                 <input asp-for="AnswerCreateDtos[3].AnswerText" class="form-control"/>
 
                 <label asp-for="AnswerCreateDtos[3].IsCorrect">Is Correct?</label>
                 <!-- Toggle switch for true/false -->
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch4" asp-for="AnswerCreateDtos[3].IsCorrect">
-                    <label class="custom-control-label" for="customSwitch4">Toggle for True/False</label>
+                    <label class="custom-control-label" for="customSwitch4"></label>
                 </div>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn-primary"/>
+                <label class="d-flex justify-content-center" asp-for="AnswerCreateDtos[4].AnswerText">E</label>
+                <input asp-for="AnswerCreateDtos[4].AnswerText" class="form-control"/>
+
+                <label asp-for="AnswerCreateDtos[4].IsCorrect">Is Correct?</label>
+                <!-- Toggle switch for true/false -->
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch5" asp-for="AnswerCreateDtos[4].IsCorrect">
+                    <label class="custom-control-label" for="customSwitch5"></label>
+                </div>
+            </div>
+
+            <div class="form-group d-flex justify-content-center mt-2">
+                <input type="submit" value="Save" class="custom-dark-blue btn btn-primary"/>
             </div>
 
         </form>

@@ -16,7 +16,18 @@ public class LessonController : Controller
     // GET
     public async Task<IActionResult> Index()
     {
-        return View(await _lessonApiService.GetAllAsync());
+        List<LessonWithSubjectCountModel> list = new();
+        foreach (LessonDto item in await _lessonApiService.GetAllAsync())
+        {
+            LessonWithSubjectCountModel model = new()
+            {
+                SubjectCount = await _lessonApiService.GetSubjectCountOfALesson(item.Id),
+                LessonDto = item
+            };
+                
+            list.Add(model);
+        }
+        return View(list);
     }
 
     public IActionResult Save()

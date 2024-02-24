@@ -22,7 +22,7 @@ namespace WWTBA.Web.Controllers
             List<SubjectWithQuestionCountModel> list = new();
             foreach (SubjectWithLessonDto item in await _subjectApiService.GetSubjectsWithLessonDto())
             {
-                SubjectWithQuestionCountModel model = new SubjectWithQuestionCountModel()
+                SubjectWithQuestionCountModel model = new()
                 {
                     QuestionCount = await _subjectApiService.GetQuestionCountOfASubject(item.Id),
                     SubjectWithLessonDto = item
@@ -31,6 +31,11 @@ namespace WWTBA.Web.Controllers
                 list.Add(model);
             }
             return View(list);
+        }
+        
+        public async Task<IActionResult> ListSubjects(int id)
+        {
+            return View(await _subjectApiService.Where(id));
         }
 
         public async Task<IActionResult> Save()
