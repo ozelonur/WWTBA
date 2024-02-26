@@ -22,6 +22,13 @@ namespace WWTBA.Service.Mapping
             CreateMap<AnswerCreateDto, Answer>();
             CreateMap<AnswerUpdateDto, Answer>();
             CreateMap<Question, QuestionWithAnswersDto>();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<UserAnswer, UserAnswerDto>().ReverseMap();
+            CreateMap<User, UserWithAnswersDto>();
+            CreateMap<UserCreateDto, User>();
+            CreateMap<UserUpdateDto, User>();
+            CreateMap<UserAnswerCreateDto, UserAnswer>();
+            CreateMap<UserAnswerUpdateDto, UserAnswer>();
         }
     }
 }

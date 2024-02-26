@@ -31,6 +31,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<QuestionUpdateDtoValidator>
 builder.Services.AddValidatorsFromAssemblyContaining<AnswerValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<AnswerCreateValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<AnswerUpdateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserAnswerValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserCreateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserUpdateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserAnswerCreateValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserAnswerUpdateValidator>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

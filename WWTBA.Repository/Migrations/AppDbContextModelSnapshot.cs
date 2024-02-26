@@ -160,6 +160,72 @@ namespace WWTBA.Repository.Migrations
                     b.ToTable("Subjects", (string)null);
                 });
 
+            modelBuilder.Entity("WWTBA.Core.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirebaseToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UniqueIdentifier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("WWTBA.Core.Models.UserAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAnswers", (string)null);
+                });
+
             modelBuilder.Entity("WWTBA.Core.Models.Answer", b =>
                 {
                     b.HasOne("WWTBA.Core.Models.Question", "Question")
@@ -193,6 +259,17 @@ namespace WWTBA.Repository.Migrations
                     b.Navigation("Lesson");
                 });
 
+            modelBuilder.Entity("WWTBA.Core.Models.UserAnswer", b =>
+                {
+                    b.HasOne("WWTBA.Core.Models.User", "User")
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WWTBA.Core.Models.Lesson", b =>
                 {
                     b.Navigation("Subjects");
@@ -206,6 +283,11 @@ namespace WWTBA.Repository.Migrations
             modelBuilder.Entity("WWTBA.Core.Models.Subject", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("WWTBA.Core.Models.User", b =>
+                {
+                    b.Navigation("UserAnswers");
                 });
 #pragma warning restore 612, 618
         }
