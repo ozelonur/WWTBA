@@ -54,6 +54,12 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(await _userService.AnyAsync(x => x.Id == id));
         }
 
+        [HttpGet("[action]/{username}")]
+        public async Task<IActionResult> AnyUsername(string username)
+        {
+            return CreateActionResult(await _userService.Where(x => x.Username == username));
+        }
+
         [HttpGet("CheckUID/{id}")]
         public async Task<IActionResult> CheckUID(string id)
         {
