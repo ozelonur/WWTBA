@@ -34,6 +34,12 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _userService.GetByIdAsync(id));
         }
+
+        [HttpGet("[action]/{uId}")]
+        public async Task<IActionResult> GetByUID(string uId)
+        {
+            return CreateActionResult(await _userService.Where(x => x.UniqueIdentifier == uId));
+        }
         
         [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
         [HttpDelete("{id}")]
