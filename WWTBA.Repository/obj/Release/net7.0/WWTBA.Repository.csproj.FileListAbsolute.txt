@@ -1,0 +1,17 @@
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/bin/Release/net7.0/WWTBA.Repository.deps.json
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/bin/Release/net7.0/WWTBA.Repository.runtimeconfig.json
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/bin/Release/net7.0/WWTBA.Repository.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/bin/Release/net7.0/WWTBA.Repository.pdb
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/bin/Release/net7.0/WWTBA.Core.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/bin/Release/net7.0/WWTBA.Core.pdb
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.csproj.AssemblyReference.cache
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.GeneratedMSBuildEditorConfig.editorconfig
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.AssemblyInfoInputs.cache
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.AssemblyInfo.cs
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.csproj.CoreCompileInputs.cache
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.csproj.CopyComplete
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/refint/WWTBA.Repository.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.pdb
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/WWTBA.Repository.genruntimeconfig.cache
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Repository/obj/Release/net7.0/ref/WWTBA.Repository.dll
