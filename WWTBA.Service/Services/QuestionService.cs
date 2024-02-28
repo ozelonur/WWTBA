@@ -58,5 +58,15 @@ namespace WWTBA.Service.Services
             QuestionWithAnswersDto questionDto = _mapper.Map<QuestionWithAnswersDto>(question);
             return CustomResponseDto<QuestionWithAnswersDto>.Success(StatusCodes.Status200OK, questionDto);
         }
+
+        public async Task<CustomResponseDto<IEnumerable<QuestionWithAnswersDto>>> GetUnsolvedQuestionsWithAnswersBySubjectAsync(int userId, int subjectId)
+        {
+            IEnumerable<Question> questions =
+                await _questionRepository.GetUnsolvedQuestionsBySubject(userId, subjectId);
+
+            IEnumerable<QuestionWithAnswersDto> questionsDto = _mapper.Map<IEnumerable<QuestionWithAnswersDto>>(questions);
+            return CustomResponseDto<IEnumerable<QuestionWithAnswersDto>>.Success(StatusCodes.Status200OK,
+                questionsDto);
+        }
     }
 }

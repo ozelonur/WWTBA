@@ -20,5 +20,19 @@ namespace WWTBA.Repository.Repositories
             return await context.Questions.Include(x => x.Answers).Where(x => x.Id == questionId)
                 .SingleOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<Question>> GetUnsolvedQuestionsBySubject(int userId, int subjectId)
+        {
+            List<int> solvedQuestionIds = await context.UserAnswers.Where(sq => sq.UserId == userId)
+                .Select(sq => sq.QuestionId).ToListAsync();
+
+            List<Question> unsolvedQuestions = await context.Questions
+                .Where(q => q.SubjectId == subjectId && !solvedQuestionIds.Contains(q.Id))
+                .Include(q => q.Answers)
+                .OrderBy(r => Guid.NewGuid())
+                .Take(10).ToListAsync();
+
+            return unsolvedQuestions;
+        }
     }
 }

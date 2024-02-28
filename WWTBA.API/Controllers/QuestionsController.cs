@@ -24,6 +24,15 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(await _questionService.GetQuestionWithAnswersAsync(questionId));
         }
 
+        [HttpGet("[action]/{userId}/{subjectId}")]
+        public async Task<IActionResult> GetUnsolvedQuestionsWithAnswersBySubject(int userId, int subjectId)
+        {
+            return CreateActionResult(
+                await _questionService.GetUnsolvedQuestionsWithAnswersBySubjectAsync(userId, subjectId));
+        }
+        
+        
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

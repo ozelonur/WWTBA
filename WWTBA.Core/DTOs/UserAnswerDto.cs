@@ -5,6 +5,7 @@ namespace WWTBA.Core.DTOs
         public int UserId { get; set; }
         public int AnswerId { get; set; }
         public bool IsCorrect { get; set; }
+        public int QuestionId { get; set; }
     }
 }
 

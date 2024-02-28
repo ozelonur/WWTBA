@@ -11,6 +11,9 @@ namespace WWTBA.Core.Services
         Task<CustomResponseDto<List<QuestionWithSubjectDto>>> GetQuestionsWithSubject();
         Task<CustomResponseDto<QuestionWithAnswersDto>> GetQuestionWithAnswersAsync(int questionId);
 
+        Task<CustomResponseDto<IEnumerable<QuestionWithAnswersDto>>> GetUnsolvedQuestionsWithAnswersBySubjectAsync(
+            int userId, int subjectId);
+
     }
 }
 

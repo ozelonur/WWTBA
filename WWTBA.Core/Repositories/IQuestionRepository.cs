@@ -6,6 +6,8 @@ namespace WWTBA.Core.Repositories
     {
         Task<List<Question>> GetQuestionsWithSubjectAsync();
         public Task<Question> GetQuestionWithAnswersAsync(int questionId);
+
+        public Task<IEnumerable<Question>> GetUnsolvedQuestionsBySubject(int userId, int subjectId);
     }
 }
 
