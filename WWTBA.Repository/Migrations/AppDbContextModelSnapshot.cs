@@ -232,6 +232,33 @@ namespace WWTBA.Repository.Migrations
                     b.ToTable("UserAnswers", (string)null);
                 });
 
+            modelBuilder.Entity("WWTBA.Core.Models.UserTest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("TestSolveTime")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTests", (string)null);
+                });
+
             modelBuilder.Entity("WWTBA.Core.Models.Answer", b =>
                 {
                     b.HasOne("WWTBA.Core.Models.Question", "Question")
@@ -276,6 +303,17 @@ namespace WWTBA.Repository.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WWTBA.Core.Models.UserTest", b =>
+                {
+                    b.HasOne("WWTBA.Core.Models.User", "User")
+                        .WithMany("UserTests")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WWTBA.Core.Models.Lesson", b =>
                 {
                     b.Navigation("Subjects");
@@ -294,6 +332,8 @@ namespace WWTBA.Repository.Migrations
             modelBuilder.Entity("WWTBA.Core.Models.User", b =>
                 {
                     b.Navigation("UserAnswers");
+
+                    b.Navigation("UserTests");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,6 +29,9 @@ namespace WWTBA.Service.Mapping
             CreateMap<UserUpdateDto, User>();
             CreateMap<UserAnswerCreateDto, UserAnswer>();
             CreateMap<UserAnswerUpdateDto, UserAnswer>();
+            CreateMap<UserTest, UserTestDto>().ReverseMap();
+            CreateMap<UserTestCreateDto, UserTest>();
+            CreateMap<UserTestUpdateDto, UserTest>();
         }
     }
 }

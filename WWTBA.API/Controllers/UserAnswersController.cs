@@ -40,7 +40,7 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(await _userAnswerService.GetByIdAsync(id));
         }
         
-        [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
+        [ServiceFilter(typeof(NotFoundFilter<UserAnswer, UserAnswerDto>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {

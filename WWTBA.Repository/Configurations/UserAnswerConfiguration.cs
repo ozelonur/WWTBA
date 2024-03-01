@@ -12,6 +12,7 @@ namespace WWTBA.Repository.Configurations
             builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(x => x.UserId).IsRequired();
             builder.Property(x => x.AnswerId).IsRequired();
+            builder.Property(x => x.UserTestId).IsRequired();
 
             builder.ToTable("UserAnswers");
 

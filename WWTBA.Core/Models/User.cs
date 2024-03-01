@@ -9,6 +9,7 @@ namespace WWTBA.Core.Models
         public string UniqueIdentifier { get; set; }
 
         public ICollection<UserAnswer> UserAnswers { get; set; }
+        public ICollection<UserTest> UserTests { get; set; }
     }
 }
 

@@ -13,6 +13,8 @@ namespace WWTBA.Service.Validations
                 .WithMessage("{PropertyName have to be greater than 0!}");
             RuleFor(x => x.QuestionSolveTime).InclusiveBetween(.01f, float.MaxValue)
                 .WithMessage("{PropertyName have to be greater than 0!}");
+            RuleFor(x => x.UserTestId).InclusiveBetween(1, int.MaxValue)
+                .WithMessage("{PropertyName have to be greater than 0!}");
         }
     }
 }

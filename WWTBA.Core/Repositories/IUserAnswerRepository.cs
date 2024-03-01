@@ -4,7 +4,6 @@ namespace WWTBA.Core.Repositories
 {
     public interface IUserAnswerRepository : IGenericRepository<UserAnswer>
     {
-    
     }
 }
 
