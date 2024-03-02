@@ -34,5 +34,11 @@ namespace WWTBA.Service.Services
             await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
+
+        public async Task<CustomResponseDto<UserTestResultDto>> GetTestResultsAsync(int testId)
+        {
+            UserTestResultDto dto = await _userTestRepository.GetTestResultsAsync(testId);
+            return CustomResponseDto<UserTestResultDto>.Success(StatusCodes.Status200OK, dto);
+        }
     }
 }

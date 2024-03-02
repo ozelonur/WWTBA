@@ -7,6 +7,8 @@ namespace WWTBA.Core.Services
     {
         Task<CustomResponseDto<UserTestDto>> AddAsync(UserTestCreateDto dto);
         Task<CustomResponseDto<NoContentDto>> UpdateAsync(UserTestUpdateDto dto);
+
+        Task<CustomResponseDto<UserTestResultDto>> GetTestResultsAsync(int testId);
     }
 }
 

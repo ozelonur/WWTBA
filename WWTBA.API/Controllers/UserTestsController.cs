@@ -32,6 +32,12 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _userTestService.GetAllAsync());
         }
+
+        [HttpGet("[action]/{testId}")]
+        public async Task<IActionResult> GetTestResultsAsync(int testId)
+        {
+            return CreateActionResult(await _userTestService.GetTestResultsAsync(testId));
+        }
         
         [ServiceFilter(typeof(NotFoundFilter<UserTest, UserTestDto>))]
         [HttpGet("{id}")]
