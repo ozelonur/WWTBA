@@ -106,7 +106,7 @@ namespace WWTBA.Repository.Repositories
                 MostCorrectSubjectCorrectCount = mostCorrectSubject.CorrectCount,
                 MostCorrectSubjectWrongCount = mostCorrectSubject.WrongCount,
                 MostWrongSubjectName = subjects[mostWrongSubject.SubjectId],
-                MostWrongRatio = mostWrongSubject.WrongRatio,
+                MostWrongRatio = mostWrongSubject.CorrectRatio,
                 MostWrongSubjectCorrectCount = mostWrongSubject.CorrectCount,
                 MostWrongSubjectWrongCount = mostWrongSubject.WrongCount,
                 FastestSolveTimeSubjectName = subjects[fastestSolveTimeSubject.SubjectId],
