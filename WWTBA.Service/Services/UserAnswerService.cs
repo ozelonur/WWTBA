@@ -34,5 +34,23 @@ namespace WWTBA.Service.Services
             await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
+
+        public async Task<CustomResponseDto<UserAverageDto>> GetTotalAverageAsync(int userId)
+        {
+            UserAverageDto dto = await _userAnswerRepository.GetTotalAverageAsync(userId);
+            return CustomResponseDto<UserAverageDto>.Success(StatusCodes.Status200OK, dto);
+        }
+
+        public async Task<CustomResponseDto<UserSubjectAverageDto>> GetSubjectSpecificAverageAsync(int userId, int subjectId)
+        {
+            UserSubjectAverageDto dto = await _userAnswerRepository.GetSubjectSpecificAverageAsync(userId, subjectId);
+            return CustomResponseDto<UserSubjectAverageDto>.Success(StatusCodes.Status200OK, dto);
+        }
+
+        public async Task<CustomResponseDto<UserAnalysisDto>> GetUserAnalysisAsync(int userId)
+        {
+            UserAnalysisDto dto = await _userAnswerRepository.GetUserAnalysisAsync(userId);
+            return CustomResponseDto<UserAnalysisDto>.Success(StatusCodes.Status200OK, dto);
+        }
     }
 }

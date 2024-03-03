@@ -52,6 +52,25 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _userAnswerService.AnyAsync(x => x.Id == id));
         }
+        
+        
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetTotalAverageAsync(int userId)
+        {
+            return CreateActionResult(await _userAnswerService.GetTotalAverageAsync(userId));
+        }
+
+        [HttpGet("[action]/{userId}/{subjectId}")]
+        public async Task<IActionResult> GetSubjectSpecificAverageAsync(int userId, int subjectId)
+        {
+            return CreateActionResult(await _userAnswerService.GetSubjectSpecificAverageAsync(userId, subjectId));
+        }
+
+        [HttpGet("[action]/{userId}")]
+        public async Task<IActionResult> GetUserAnalysisAsync(int userId)
+        {
+            return CreateActionResult(await _userAnswerService.GetUserAnalysisAsync(userId));
+        }
     }
 }
 
