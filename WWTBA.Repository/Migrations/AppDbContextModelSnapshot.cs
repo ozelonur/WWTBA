@@ -75,29 +75,6 @@ namespace WWTBA.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lessons", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Tarih",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Coğrafya",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Vatandaşlık",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("WWTBA.Core.Models.Question", b =>
@@ -130,6 +107,41 @@ namespace WWTBA.Repository.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Questions", (string)null);
+                });
+
+            modelBuilder.Entity("WWTBA.Core.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("WWTBA.Core.Models.Subject", b =>
@@ -171,17 +183,38 @@ namespace WWTBA.Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FirebaseToken")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailVerificationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EmailVerificationCodeCreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmailVerificationCodeValidityDurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Surname")
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UniqueIdentifier")
-                        .IsRequired()
+                    b.Property<string>("PasswordResetCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetCodeCreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PasswordResetCodeValidityDurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -284,6 +317,17 @@ namespace WWTBA.Repository.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("WWTBA.Core.Models.RefreshToken", b =>
+                {
+                    b.HasOne("WWTBA.Core.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WWTBA.Core.Models.Subject", b =>
                 {
                     b.HasOne("WWTBA.Core.Models.Lesson", "Lesson")
@@ -334,6 +378,8 @@ namespace WWTBA.Repository.Migrations
 
             modelBuilder.Entity("WWTBA.Core.Models.User", b =>
                 {
+                    b.Navigation("RefreshTokens");
+
                     b.Navigation("UserAnswers");
 
                     b.Navigation("UserTests");

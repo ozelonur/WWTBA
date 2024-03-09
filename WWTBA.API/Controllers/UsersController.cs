@@ -9,10 +9,12 @@ namespace WWTBA.API.Controllers
     public class UsersController : CustomBaseController
     {
         private readonly IUserService _userService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IRefreshTokenService refreshTokenService)
         {
             _userService = userService;
+            _refreshTokenService = refreshTokenService;
         }
         
         [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
@@ -34,12 +36,6 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _userService.GetByIdAsync(id));
         }
-
-        [HttpGet("[action]/{uId}")]
-        public async Task<IActionResult> GetByUID(string uId)
-        {
-            return CreateActionResult(await _userService.Where(x => x.UniqueIdentifier == uId));
-        }
         
         [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
         [HttpDelete("{id}")]
@@ -59,24 +55,63 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _userService.AnyAsync(x => x.Username == username));
         }
-
-        [HttpGet("CheckUID/{id}")]
-        public async Task<IActionResult> CheckUID(string id)
-        {
-            return CreateActionResult(await _userService.AnyAsync(x => x.UniqueIdentifier == id));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add(UserCreateDto dto)
-        {
-            return CreateActionResult(await _userService.AddAsync(dto));
-        }
         
         [HttpPut]
         public async Task<IActionResult> Update(UserUpdateDto dto)
         {
             return CreateActionResult(await _userService.UpdateAsync(dto));
         }
+        
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(UserCreateDto userCreateDto)
+        {
+            CustomResponseDto<UserDto> result = await _userService.RegisterAsync(userCreateDto);
+            return CreateActionResult(result);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+            CustomResponseDto<TokenDto> result = await _userService.LoginAsync(loginDto);
+            return CreateActionResult(result);
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto request)
+        {
+            CustomResponseDto<TokenDto> result = await _refreshTokenService.RefreshTokenAsync(request.RefreshToken);
+            return CreateActionResult(result);
+        }
+        
+        [HttpPost("send-verification-email")]
+        public async Task<IActionResult> SendVerificationEmail(SendVerificationEmailDto dto)
+        {
+            CustomResponseDto<NoContentDto> result = await _userService.SendVerificationEmailAsync(dto.Email);
+            return CreateActionResult(result);
+        }
+
+        [HttpPost("verify-email")]
+        public async Task<IActionResult> VerifyEmail(VerifyEmailDto dto)
+        {
+            CustomResponseDto<bool> result = await _userService.VerifyEmailAsync(dto.Email, dto.VerificationCode);
+            return CreateActionResult(result);
+        }
+        
+        [HttpPost("send-password-reset-code")]
+        public async Task<IActionResult> SendPasswordResetCode(SendPasswordResetCodeDto dto)
+        {
+            CustomResponseDto<NoContentDto> result = await _userService.SendPasswordResetCodeAsync(dto.Email);
+            return CreateActionResult(result);
+        }
+        
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
+        {
+            CustomResponseDto<NoContentDto> result = await _userService.ResetPasswordAsync(dto.Email, dto.PasswordResetCode, dto.NewPassword);
+            return CreateActionResult(result);
+        }
+
+
     }
 }
 

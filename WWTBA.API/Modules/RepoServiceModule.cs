@@ -8,6 +8,8 @@ using WWTBA.Repository.Repositories;
 using WWTBA.Repository.UnitOfWorks;
 using WWTBA.Service.Mapping;
 using WWTBA.Service.Services;
+using WWTBA.Shared.Interfaces;
+using WWTBA.Shared.Services;
 using Module = Autofac.Module;
 
 namespace WWTBA.API.Modules
@@ -26,6 +28,8 @@ namespace WWTBA.API.Modules
             // builder.RegisterType<SubjectService>().As<ISubjectService>().InstancePerLifetimeScope();
             // builder.RegisterType<QuestionService>().As<IQuestionService>().InstancePerLifetimeScope();
             // builder.RegisterType<AnswerService>().As<IAnswerService>().InstancePerLifetimeScope();
+            
+            builder.RegisterType<TokenService>().As<ITokenService>().InstancePerLifetimeScope();
 
             Assembly apiAssembly = Assembly.GetExecutingAssembly();
             Assembly repositoryAssembly = Assembly.GetAssembly(typeof(AppDbContext));

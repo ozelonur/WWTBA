@@ -1,20 +1,33 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using WWTBA.Core.DTOs;
+using WWTBA.Core.GlobalStrings;
 using WWTBA.Core.Models;
 using WWTBA.Core.Repositories;
 using WWTBA.Core.Services;
 using WWTBA.Core.UnitOfWorks;
+using WWTBA.Shared.Interfaces;
 
 namespace WWTBA.Service.Services
 {
     public class UserService : Service<User, UserDto>, IUserService
     {
         private readonly IUserRepository _userRepository;
-        
-        public UserService(IGenericRepository<User> repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository) : base(repository, unitOfWork, mapper)
+        private readonly ITokenService _tokenService;
+        private readonly IRefreshTokenService _refreshTokenService;
+        private readonly IEmailService _emailService;
+
+        public UserService(IGenericRepository<User> repository, IUnitOfWork unitOfWork, IMapper mapper,
+            IUserRepository userRepository, ITokenService tokenService,
+            IRefreshTokenService refreshTokenService, IEmailService emailService) : base(
+            repository, unitOfWork,
+            mapper)
         {
             _userRepository = userRepository;
+            _tokenService = tokenService;
+            _refreshTokenService = refreshTokenService;
+            _emailService = emailService;
         }
 
         public async Task<CustomResponseDto<UserDto>> AddAsync(UserCreateDto dto)
@@ -24,6 +37,27 @@ namespace WWTBA.Service.Services
             await _unitOfWork.CommitAsync();
             UserDto newDto = _mapper.Map<UserDto>(newUser);
             return CustomResponseDto<UserDto>.Success(StatusCodes.Status200OK, newDto);
+        }
+
+        public async Task<CustomResponseDto<UserDto>> RegisterAsync(UserCreateDto dto)
+        {
+            if (await _userRepository.AnyAsync(u => u.Username == dto.Username))
+            {
+                return CustomResponseDto<UserDto>.Fail(StatusCodes.Status400BadRequest, "Kullanıcı adı zaten alınmış.");
+            }
+
+            if (await _userRepository.AnyAsync(u => u.Email == dto.Email))
+            {
+                return CustomResponseDto<UserDto>.Fail(StatusCodes.Status400BadRequest, "E-posta zaten kayıtlı!");
+            }
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            User user = _mapper.Map<User>(dto);
+            user.PasswordHash = hashedPassword;
+            await _userRepository.AddAsync(user);
+            await _unitOfWork.CommitAsync();
+            UserDto userDto = _mapper.Map<UserDto>(user);
+            return CustomResponseDto<UserDto>.Success(StatusCodes.Status201Created, userDto);
         }
 
         public async Task<CustomResponseDto<UserWithAnswersDto>> GetUserWithAnswersAsync(int userId)
@@ -40,6 +74,139 @@ namespace WWTBA.Service.Services
             await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
+
+        public async Task<CustomResponseDto<NoContentDto>> SendVerificationEmailAsync(string email)
+        {
+            User user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status404NotFound, "Kullanıcı bulunamadı.");
+            }
+
+            Random random = new Random();
+            string verificationCode = random.Next(0, 999999).ToString("D6");
+
+            string verificationCodeHash = BCrypt.Net.BCrypt.HashPassword(verificationCode);
+            user.EmailVerificationCode = verificationCodeHash;
+            user.EmailVerificationCodeCreatedAt = DateTime.UtcNow;
+            user.EmailVerificationCodeValidityDurationInMinutes = 15;
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+
+            string mailSubject = "Mail Adresinizi doğrulayın";
+            await _emailService.SendEmailAsync(email, mailSubject, verificationCode, MailType.VerificationCode);
+
+            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
+        }
+
+
+        public async Task<CustomResponseDto<bool>> VerifyEmailAsync(string email, string verificationCode)
+        {
+            User user = await _userRepository
+                .Where(u => u.Email == email)
+                .FirstOrDefaultAsync();
+
+            if (user == null ||  !BCrypt.Net.BCrypt.Verify(verificationCode, user.EmailVerificationCode))
+            {
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, "Doğrulama başarısız.");
+            }
+
+            DateTime codeCreationTime = user.EmailVerificationCodeCreatedAt ?? DateTime.UtcNow;
+            TimeSpan timeSinceCodeCreated = DateTime.UtcNow - codeCreationTime;
+            if (timeSinceCodeCreated.TotalMinutes > user.EmailVerificationCodeValidityDurationInMinutes)
+            {
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, "Doğrulama kodunun süresi doldu.");
+            }
+
+            user.IsEmailVerified = true;
+            user.EmailVerificationCode = null;
+            user.EmailVerificationCodeCreatedAt = null;
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+
+            return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, user.IsEmailVerified);
+        }
+
+        public async Task<CustomResponseDto<NoContentDto>> SendPasswordResetCodeAsync(string email)
+        {
+            User user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status404NotFound, "Kullanıcı bulunamadı!");
+            }
+
+            Random random = new Random();
+            string resetCode = random.Next(0, 999999).ToString("D6");
+
+            string resetCodeHash = BCrypt.Net.BCrypt.HashPassword(resetCode);
+            user.PasswordResetCode = resetCodeHash;
+            user.PasswordResetCodeCreatedAt = DateTime.UtcNow;
+            user.PasswordResetCodeValidityDurationInMinutes = 15;
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+            string subject = "Parola sıfırlama kodunuz";
+            await _emailService.SendEmailAsync(email, subject, resetCode, MailType.PasswordResetCode);
+
+            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
+        }
+
+
+        public async Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode, string newPassword)
+        {
+            User user = await _userRepository.GetByEmailAsync(email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(passwordResetCode, user.PasswordResetCode))
+            {
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest, "Geçersiz parola sıfırlama kodu!");
+            }
+
+            DateTime codeCreationTime = user.PasswordResetCodeCreatedAt ?? DateTime.UtcNow;
+            TimeSpan timeSinceCodeCreated = DateTime.UtcNow - codeCreationTime;
+            if (timeSinceCodeCreated.TotalMinutes > user.PasswordResetCodeValidityDurationInMinutes)
+            {
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest, "Parolama sıfırlama kodunun süresi dolmuş.");
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.PasswordResetCode = null;
+            user.PasswordResetCodeCreatedAt = null;
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+
+            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
+        }
+
+
+
+        public async Task<CustomResponseDto<TokenDto>> LoginAsync(LoginDto loginDto)
+        {
+            User user = await _userRepository.GetByUsernameAsync(loginDto.Username);
+            if (user == null)
+            {
+                return CustomResponseDto<TokenDto>.Fail(StatusCodes.Status404NotFound, "Kullanıcı bulunamadı!");
+            }
+
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash);
+            if (!isValidPassword)
+            {
+                return CustomResponseDto<TokenDto>.Fail(StatusCodes.Status401Unauthorized, "Geçersiz şifre!");
+            }
+
+            Dictionary<string, string> claims = new Dictionary<string, string>
+            {
+                { "UserId", user.Id.ToString() },
+                { "Username", user.Username }
+            };
+            string accessToken = _tokenService.GenerateToken(claims);
+
+            CustomResponseDto<TokenDto> refreshToken = await _refreshTokenService.CreateRefreshTokenAsync(user);
+
+            return CustomResponseDto<TokenDto>.Success(StatusCodes.Status200OK,
+                new TokenDto
+                {
+                    Token = accessToken,
+                    Expiration = DateTime.UtcNow.AddHours(1),
+                    RefreshToken = refreshToken.Data.RefreshToken
+                });
+        }
     }
 }
-

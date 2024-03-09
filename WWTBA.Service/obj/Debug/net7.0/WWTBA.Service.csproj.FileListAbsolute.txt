@@ -15,3 +15,5 @@
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/obj/Debug/net7.0/refint/WWTBA.Service.dll
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/obj/Debug/net7.0/WWTBA.Service.pdb
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/obj/Debug/net7.0/ref/WWTBA.Service.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/bin/Debug/net7.0/WWTBA.Shared.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Service/bin/Debug/net7.0/WWTBA.Shared.pdb

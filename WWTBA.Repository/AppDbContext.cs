@@ -16,6 +16,8 @@ namespace WWTBA.Repository
         public DbSet<UserAnswer> UserAnswers { get; set; }
         public DbSet<UserTest> UserTests { get; set; }
         
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

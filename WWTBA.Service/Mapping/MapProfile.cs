@@ -32,6 +32,7 @@ namespace WWTBA.Service.Mapping
             CreateMap<UserTest, UserTestDto>().ReverseMap();
             CreateMap<UserTestCreateDto, UserTest>();
             CreateMap<UserTestUpdateDto, UserTest>();
+            CreateMap<RefreshToken, RefreshTokenDto>().ReverseMap();
         }
     }
 }

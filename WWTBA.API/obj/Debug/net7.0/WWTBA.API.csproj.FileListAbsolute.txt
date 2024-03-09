@@ -98,3 +98,9 @@
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.API.staticwebassets.runtime.json
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.dll
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Web.pdb
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/BCrypt.Net-Next.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Shared.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/WWTBA.Shared.pdb
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/AspNetCoreRateLimit.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.API/bin/Debug/net7.0/Newtonsoft.Json.dll

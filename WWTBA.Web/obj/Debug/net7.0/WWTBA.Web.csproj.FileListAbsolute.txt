@@ -83,3 +83,7 @@
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/WWTBA.Service.pdb
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/WWTBA.Core.pdb
 /Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/WWTBA.Repository.pdb
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/BCrypt.Net-Next.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/WWTBA.Shared.dll
+/Users/onurozel/RiderProjects/WWTBA/WWTBA.Web/bin/Debug/net7.0/WWTBA.Shared.pdb

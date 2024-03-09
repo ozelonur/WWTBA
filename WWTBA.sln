@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWTBA.API", "WWTBA.API\WWTB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWTBA.Web", "WWTBA.Web\WWTBA.Web.csproj", "{262C016B-DC23-4C7A-B4EA-F1BE7EA3A9FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWTBA.Shared", "WWTBA.Shared\WWTBA.Shared.csproj", "{507D5F6B-4E1D-4350-8C85-2227F53C1F7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{262C016B-DC23-4C7A-B4EA-F1BE7EA3A9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{262C016B-DC23-4C7A-B4EA-F1BE7EA3A9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{262C016B-DC23-4C7A-B4EA-F1BE7EA3A9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{507D5F6B-4E1D-4350-8C85-2227F53C1F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{507D5F6B-4E1D-4350-8C85-2227F53C1F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{507D5F6B-4E1D-4350-8C85-2227F53C1F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{507D5F6B-4E1D-4350-8C85-2227F53C1F7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
