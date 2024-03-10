@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using WWTBA.Core.DTOs;
+using WWTBA.Core.Enums;
 using WWTBA.Core.GlobalStrings;
 using WWTBA.Core.Models;
 using WWTBA.Core.Repositories;
@@ -30,7 +31,7 @@ namespace WWTBA.Service.Services
             if (devices == null || !devices.Any())
             {
                 return CustomResponseDto<IEnumerable<DeviceDto>>.Fail(StatusCodes.Status404NotFound,
-                    "Belirtilen kullanıcı için cihaz bulunamadı.");
+                    (int)ErrorType.DeviceNotFoundForUser);
             }
 
             IEnumerable<DeviceDto> deviceDtos = _mapper.Map<IEnumerable<DeviceDto>>(devices);
@@ -42,7 +43,7 @@ namespace WWTBA.Service.Services
             User user = await _userRepository.GetByIdAsync(userId);
             if (user == null)
             {
-                return CustomResponseDto<DeviceDto>.Fail(StatusCodes.Status404NotFound, "Kullanıcı bulunamadı!");
+                return CustomResponseDto<DeviceDto>.Fail(StatusCodes.Status404NotFound, (int)ErrorType.UserNotFound);
             }
 
             Device device = await _deviceRepository.GetDeviceByUserIdAndIdentifierAsync(userId, deviceIdentifier);
@@ -86,7 +87,7 @@ namespace WWTBA.Service.Services
             Device device = await _deviceRepository.GetDeviceByUserIdAndIdentifierAsync(userId, deviceIdentifier);
             if (device == null)
             {
-                return CustomResponseDto<bool>.Fail(StatusCodes.Status404NotFound, "Cihaz bulunamadı!");
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status404NotFound, (int)ErrorType.DeviceNotFound);
             }
 
             bool isValidVCode = BCrypt.Net.BCrypt.Verify(verificationCode, device.VerificationCode);
@@ -95,7 +96,7 @@ namespace WWTBA.Service.Services
                 !device.VerificationCodeSentAt.HasValue ||
                 !((DateTime.UtcNow - device.VerificationCodeSentAt.Value).TotalMinutes <= 5))
                 return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest,
-                    "Geçersiz doğrulama kodu veya kodun süresi doldu.");
+                    (int)ErrorType.InvalidOrExpiredDeviceVerificationCode);
             
             device.IsVerified = true;
             device.VerificationCodeSentAt = null;

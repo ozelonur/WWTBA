@@ -1,5 +1,6 @@
 using AutoMapper;
 using WWTBA.Core.DTOs;
+using WWTBA.Core.Enums;
 using WWTBA.Core.Models;
 using WWTBA.Core.Repositories;
 using WWTBA.Core.Services;
@@ -49,7 +50,7 @@ namespace WWTBA.Service.Services
             RefreshToken refreshToken = await _refreshTokenRepository.GetByTokenAsync(token);
             if (refreshToken == null || refreshToken.IsRevoked || refreshToken.Expires <= DateTime.UtcNow)
             {
-                return CustomResponseDto<TokenDto>.Fail(404, "Invalid refresh token.");
+                return CustomResponseDto<TokenDto>.Fail(404, (int)ErrorType.InvalidRefreshToken);
             }
 
             refreshToken.IsRevoked = true;
@@ -79,7 +80,7 @@ namespace WWTBA.Service.Services
             RefreshToken refreshToken = await _refreshTokenRepository.GetByTokenAsync(token);
             if (refreshToken == null || refreshToken.IsRevoked)
             {
-                return CustomResponseDto<bool>.Fail(404, "Invalid refresh token.");
+                return CustomResponseDto<bool>.Fail(404, (int)ErrorType.InvalidRefreshToken);
             }
 
             refreshToken.IsRevoked = true;
@@ -94,7 +95,7 @@ namespace WWTBA.Service.Services
             IEnumerable<RefreshToken> refreshTokens = await _refreshTokenRepository.GetByUserIdAsync(userId);
             if (!refreshTokens.Any())
             {
-                return CustomResponseDto<bool>.Fail(404, "No refresh tokens found for this user.");
+                return CustomResponseDto<bool>.Fail(404, (int)ErrorType.NoRefreshTokenForUser);
             }
 
             foreach (var refreshToken in refreshTokens)
