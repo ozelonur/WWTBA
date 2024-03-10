@@ -17,10 +17,11 @@ namespace WWTBA.Service.Services
         private readonly ITokenService _tokenService;
         private readonly IRefreshTokenService _refreshTokenService;
         private readonly IEmailService _emailService;
+        private readonly IDeviceService _deviceService;
 
         public UserService(IGenericRepository<User> repository, IUnitOfWork unitOfWork, IMapper mapper,
             IUserRepository userRepository, ITokenService tokenService,
-            IRefreshTokenService refreshTokenService, IEmailService emailService) : base(
+            IRefreshTokenService refreshTokenService, IEmailService emailService, IDeviceService deviceService) : base(
             repository, unitOfWork,
             mapper)
         {
@@ -28,6 +29,7 @@ namespace WWTBA.Service.Services
             _tokenService = tokenService;
             _refreshTokenService = refreshTokenService;
             _emailService = emailService;
+            _deviceService = deviceService;
         }
 
         public async Task<CustomResponseDto<UserDto>> AddAsync(UserCreateDto dto)
@@ -100,13 +102,14 @@ namespace WWTBA.Service.Services
         }
 
 
-        public async Task<CustomResponseDto<bool>> VerifyEmailAsync(string email, string verificationCode)
+        public async Task<CustomResponseDto<bool>> VerifyEmailAsync(string email, string verificationCode,
+            string uniqueIdentifier)
         {
             User user = await _userRepository
                 .Where(u => u.Email == email)
                 .FirstOrDefaultAsync();
 
-            if (user == null ||  !BCrypt.Net.BCrypt.Verify(verificationCode, user.EmailVerificationCode))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(verificationCode, user.EmailVerificationCode))
             {
                 return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, "Doğrulama başarısız.");
             }
@@ -122,6 +125,15 @@ namespace WWTBA.Service.Services
             user.EmailVerificationCode = null;
             user.EmailVerificationCodeCreatedAt = null;
             _userRepository.Update(user);
+
+            DeviceCreateDto deviceCreateDto = new()
+            {
+                UserId = user.Id,
+                DeviceIdentifier = uniqueIdentifier
+            };
+            await _deviceService.RegisterOrUpdateDeviceAsync(deviceCreateDto);
+
+
             await _unitOfWork.CommitAsync();
 
             return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, user.IsEmailVerified);
@@ -151,19 +163,22 @@ namespace WWTBA.Service.Services
         }
 
 
-        public async Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode, string newPassword)
+        public async Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode,
+            string newPassword)
         {
             User user = await _userRepository.GetByEmailAsync(email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(passwordResetCode, user.PasswordResetCode))
             {
-                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest, "Geçersiz parola sıfırlama kodu!");
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest,
+                    "Geçersiz parola sıfırlama kodu!");
             }
 
             DateTime codeCreationTime = user.PasswordResetCodeCreatedAt ?? DateTime.UtcNow;
             TimeSpan timeSinceCodeCreated = DateTime.UtcNow - codeCreationTime;
             if (timeSinceCodeCreated.TotalMinutes > user.PasswordResetCodeValidityDurationInMinutes)
             {
-                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest, "Parolama sıfırlama kodunun süresi dolmuş.");
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest,
+                    "Parolama sıfırlama kodunun süresi dolmuş.");
             }
 
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
@@ -174,7 +189,6 @@ namespace WWTBA.Service.Services
 
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
-
 
 
         public async Task<CustomResponseDto<TokenDto>> LoginAsync(LoginDto loginDto)

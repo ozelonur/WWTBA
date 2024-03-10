@@ -19,5 +19,6 @@ namespace WWTBA.Core.Models
         public ICollection<UserAnswer> UserAnswers { get; set; }
         public ICollection<UserTest> UserTests { get; set; }
         public ICollection<RefreshToken> RefreshTokens { get; set; }
+        public ICollection<Device> Devices { get; set; }
     }
 }

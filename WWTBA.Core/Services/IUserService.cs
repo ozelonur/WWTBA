@@ -11,9 +11,13 @@ namespace WWTBA.Core.Services
         Task<CustomResponseDto<NoContentDto>> UpdateAsync(UserUpdateDto dto);
 
         Task<CustomResponseDto<NoContentDto>> SendVerificationEmailAsync(string email);
-        Task<CustomResponseDto<bool>> VerifyEmailAsync(string email, string verificationCode);
-        
+
+        Task<CustomResponseDto<bool>> VerifyEmailAsync(string email, string verificationCode,
+            string uniqueIdentifier);
+
         Task<CustomResponseDto<NoContentDto>> SendPasswordResetCodeAsync(string email);
-        Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode, string newPassword);
+
+        Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode,
+            string newPassword);
     }
 }

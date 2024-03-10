@@ -4,6 +4,7 @@ namespace WWTBA.Core.DTOs
     {
         public string Email { get; set; }
         public string VerificationCode { get; set; }
+        public string DeviceUniqueIdentifier { get; set; }
     }
 }
 

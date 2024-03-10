@@ -7,4 +7,7 @@ public static class GlobalVariables
 
     public const string resetPasswordCodeHTMLMessage =
         "Parola sıfırlama işlemi için aşağıdaki doğrulama kodunu kullanabilirsiniz.";
+    
+    public const string verificationCodeDeviceHTMLMessage =
+        "Cihazınızı doğrulamak için aşağıdaki doğrulama kodunu kullanabilirsiniz.";
 }

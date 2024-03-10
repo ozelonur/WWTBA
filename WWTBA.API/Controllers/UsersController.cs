@@ -16,34 +16,34 @@ namespace WWTBA.API.Controllers
             _userService = userService;
             _refreshTokenService = refreshTokenService;
         }
-        
+
         [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
         [HttpGet("[action]/{userId}")]
         public async Task<IActionResult> GetQuestionWithAnswers(int userId)
         {
             return CreateActionResult(await _userService.GetUserWithAnswersAsync(userId));
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return CreateActionResult(await _userService.GetAllAsync());
         }
-        
+
         [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             return CreateActionResult(await _userService.GetByIdAsync(id));
         }
-        
+
         [ServiceFilter(typeof(NotFoundFilter<User, UserWithAnswersDto>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
             return CreateActionResult(await _userService.RemoveAsync(id));
         }
-        
+
         [HttpGet("Any/{id}")]
         public async Task<IActionResult> Any(int id)
         {
@@ -55,13 +55,13 @@ namespace WWTBA.API.Controllers
         {
             return CreateActionResult(await _userService.AnyAsync(x => x.Username == username));
         }
-        
+
         [HttpPut]
         public async Task<IActionResult> Update(UserUpdateDto dto)
         {
             return CreateActionResult(await _userService.UpdateAsync(dto));
         }
-        
+
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserCreateDto userCreateDto)
         {
@@ -82,7 +82,7 @@ namespace WWTBA.API.Controllers
             CustomResponseDto<TokenDto> result = await _refreshTokenService.RefreshTokenAsync(request.RefreshToken);
             return CreateActionResult(result);
         }
-        
+
         [HttpPost("send-verification-email")]
         public async Task<IActionResult> SendVerificationEmail(SendVerificationEmailDto dto)
         {
@@ -93,25 +93,24 @@ namespace WWTBA.API.Controllers
         [HttpPost("verify-email")]
         public async Task<IActionResult> VerifyEmail(VerifyEmailDto dto)
         {
-            CustomResponseDto<bool> result = await _userService.VerifyEmailAsync(dto.Email, dto.VerificationCode);
+            CustomResponseDto<bool> result =
+                await _userService.VerifyEmailAsync(dto.Email, dto.VerificationCode, dto.DeviceUniqueIdentifier);
             return CreateActionResult(result);
         }
-        
+
         [HttpPost("send-password-reset-code")]
         public async Task<IActionResult> SendPasswordResetCode(SendPasswordResetCodeDto dto)
         {
             CustomResponseDto<NoContentDto> result = await _userService.SendPasswordResetCodeAsync(dto.Email);
             return CreateActionResult(result);
         }
-        
+
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
         {
-            CustomResponseDto<NoContentDto> result = await _userService.ResetPasswordAsync(dto.Email, dto.PasswordResetCode, dto.NewPassword);
+            CustomResponseDto<NoContentDto> result =
+                await _userService.ResetPasswordAsync(dto.Email, dto.PasswordResetCode, dto.NewPassword);
             return CreateActionResult(result);
         }
-
-
     }
 }
-
