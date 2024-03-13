@@ -194,7 +194,7 @@ namespace WWTBA.Service.Services
 
         public async Task<CustomResponseDto<TokenDto>> LoginAsync(LoginDto loginDto)
         {
-            User user = await _userRepository.GetByUsernameAsync(loginDto.Username);
+            User user = await _userRepository.GetByEmailAsync(loginDto.Email);
             if (user == null)
             {
                 return CustomResponseDto<TokenDto>.Fail(StatusCodes.Status404NotFound, (int)ErrorType.UserNotFound);
@@ -220,7 +220,8 @@ namespace WWTBA.Service.Services
                 {
                     Token = accessToken,
                     Expiration = DateTime.UtcNow.AddHours(1),
-                    RefreshToken = refreshToken.Data.RefreshToken
+                    RefreshToken = refreshToken.Data.RefreshToken,
+                    Username = user.Username
                 });
         }
     }
