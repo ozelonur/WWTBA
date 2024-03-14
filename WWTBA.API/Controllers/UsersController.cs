@@ -105,6 +105,15 @@ namespace WWTBA.API.Controllers
             return CreateActionResult(result);
         }
 
+        [HttpPost("password-reset-code-valid")]
+        public async Task<IActionResult> IsPasswordResetCodeValid(PasswordResetCodeValidityDto dto)
+        {
+            CustomResponseDto<bool> result =
+                await _userService.IsPasswordResetCodeValid(dto.Email, dto.VerificationCode);
+
+            return CreateActionResult(result);
+        }
+
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
         {

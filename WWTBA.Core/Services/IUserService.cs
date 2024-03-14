@@ -15,6 +15,8 @@ namespace WWTBA.Core.Services
         Task<CustomResponseDto<bool>> VerifyEmailAsync(string email, string verificationCode,
             string uniqueIdentifier);
 
+        Task<CustomResponseDto<bool>> IsPasswordResetCodeValid(string email, string verificationCode);
+
         Task<CustomResponseDto<NoContentDto>> SendPasswordResetCodeAsync(string email);
 
         Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode,

@@ -140,6 +140,26 @@ namespace WWTBA.Service.Services
             return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, user.IsEmailVerified);
         }
 
+        public async Task<CustomResponseDto<bool>> IsPasswordResetCodeValid(string email, string verificationCode)
+        {
+            User user = await _userRepository.Where(x => x.Email == email).FirstOrDefaultAsync();
+            
+            if (user == null || !BCrypt.Net.BCrypt.Verify(verificationCode, user.PasswordResetCode))
+            {
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.InvalidPasswordResetCode);
+            }
+            
+            DateTime codeCreationTime = user.PasswordResetCodeCreatedAt ?? DateTime.UtcNow;
+            TimeSpan timeSinceCodeCreated = DateTime.UtcNow - codeCreationTime;
+            
+            if (timeSinceCodeCreated.TotalMinutes > user.PasswordResetCodeValidityDurationInMinutes)
+            {
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.PasswordResetCodeExpired);
+            }
+            
+            return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, true);
+        }
+
         public async Task<CustomResponseDto<NoContentDto>> SendPasswordResetCodeAsync(string email)
         {
             User user = await _userRepository.GetByEmailAsync(email);
