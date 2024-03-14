@@ -254,9 +254,6 @@ namespace WWTBA.Repository.Migrations
                     b.Property<int>("PasswordResetCodeValidityDurationInMinutes")
                         .HasColumnType("int");
 
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 

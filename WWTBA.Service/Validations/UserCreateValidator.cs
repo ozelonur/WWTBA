@@ -15,14 +15,6 @@ namespace WWTBA.Service.Validations
                 .Length(2, 50)
                 .WithMessage("{PropertyName} must be between 2 and 50 characters!");
 
-            RuleFor(x => x.Surname)
-                .NotNull()
-                .WithMessage("{PropertyName} is required!")
-                .NotEmpty()
-                .WithMessage("{PropertyName} is required!")
-                .Length(2, 50)
-                .WithMessage("{PropertyName} must be between 2 and 50 characters!");
-
             RuleFor(x => x.Username)
                 .NotNull()
                 .WithMessage("{PropertyName} is required!")
