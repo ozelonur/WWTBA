@@ -46,7 +46,7 @@ namespace WWTBA.API.Controllers
         }
 
         [HttpPost("is-device-registered")]
-        public async Task<IActionResult> IsDeviceRegistered(DeviceCreateDto dto)
+        public async Task<IActionResult> IsDeviceRegistered(DeviceCheckDto dto)
         {
             CustomResponseDto<bool> result = await _deviceService.IsDeviceRegistered(dto);
             return CreateActionResult(result);

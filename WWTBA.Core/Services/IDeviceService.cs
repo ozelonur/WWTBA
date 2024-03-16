@@ -13,6 +13,6 @@ namespace WWTBA.Core.Services
         Task<CustomResponseDto<bool>> VerifyDeviceAsync(int userId, string deviceIdentifier, string verificationCode);
         Task<CustomResponseDto<DeviceDto>> RegisterOrUpdateDeviceAsync(DeviceCreateDto deviceDto);
 
-        Task<CustomResponseDto<bool>> IsDeviceRegistered(DeviceCreateDto deviceDto);
+        Task<CustomResponseDto<bool>> IsDeviceRegistered(DeviceCheckDto deviceDto);
     }
 }
