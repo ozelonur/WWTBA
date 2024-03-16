@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using WWTBA.Core.DTOs;
 using WWTBA.Core.Enums;
 using WWTBA.Core.GlobalStrings;
@@ -139,7 +140,10 @@ namespace WWTBA.Service.Services
                 return CustomResponseDto<bool>.Fail(StatusCodes.Status404NotFound,
                     (int)ErrorType.DeviceNotFoundForUser);
             }
-            return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, true);
+
+            Device device = await _deviceRepository.Where(x => x.DeviceIdentifier == deviceDto.DeviceIdentifier)
+                .FirstOrDefaultAsync();
+            return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, device.IsVerified);
         }
     }
 }
