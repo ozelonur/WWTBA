@@ -72,7 +72,14 @@ namespace WWTBA.Service.Services
             await _refreshTokenRepository.AddAsync(newRefreshTokenEntity);
             await _unitOfWork.CommitAsync();
 
-            return CustomResponseDto<TokenDto>.Success(200, new TokenDto { Token = newAccessToken, RefreshToken = newRefreshToken });
+            TokenDto accessToken = new()
+            {
+                Token = newAccessToken,
+                RefreshToken = newRefreshToken,
+                Expiration = DateTime.UtcNow.AddHours(1)
+            };
+
+            return CustomResponseDto<TokenDto>.Success(200, accessToken);
         }
 
         public async Task<CustomResponseDto<bool>> RevokeTokenAsync(string token)
