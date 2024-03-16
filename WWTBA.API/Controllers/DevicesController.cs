@@ -39,8 +39,7 @@ namespace WWTBA.API.Controllers
         public async Task<IActionResult> SendVerificationCodeToDevice(
             SendVerificationCodeToDeviceDto sendVerificationCodeToDeviceDto)
         {
-            CustomResponseDto<DeviceDto> result = await _deviceService.CheckAndSendVerificationIfNeededAsync(
-                sendVerificationCodeToDeviceDto.UserId, sendVerificationCodeToDeviceDto.DeviceIdentifier,
+            CustomResponseDto<DeviceDto> result = await _deviceService.CheckAndSendVerificationIfNeededAsync(sendVerificationCodeToDeviceDto.DeviceIdentifier,
                 sendVerificationCodeToDeviceDto.Email);
             return CreateActionResult(result);
         }

@@ -7,7 +7,7 @@ namespace WWTBA.Core.Services
     {
         Task<CustomResponseDto<IEnumerable<DeviceDto>>> GetDevicesByUserIdAsync(int userId);
 
-        Task<CustomResponseDto<DeviceDto>> CheckAndSendVerificationIfNeededAsync(int userId, string deviceIdentifier,
+        Task<CustomResponseDto<DeviceDto>> CheckAndSendVerificationIfNeededAsync(string deviceIdentifier,
             string email);
 
         Task<CustomResponseDto<bool>> VerifyDeviceAsync(int userId, string deviceIdentifier, string verificationCode);

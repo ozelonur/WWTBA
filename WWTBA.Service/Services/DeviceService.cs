@@ -38,15 +38,15 @@ namespace WWTBA.Service.Services
             return CustomResponseDto<IEnumerable<DeviceDto>>.Success(StatusCodes.Status200OK, deviceDtos);
         }
 
-        public async Task<CustomResponseDto<DeviceDto>> CheckAndSendVerificationIfNeededAsync(int userId, string deviceIdentifier, string email)
+        public async Task<CustomResponseDto<DeviceDto>> CheckAndSendVerificationIfNeededAsync(string deviceIdentifier, string email)
         {
-            User user = await _userRepository.GetByIdAsync(userId);
+            User user = await _userRepository.GetByEmailAsync(email);
             if (user == null)
             {
                 return CustomResponseDto<DeviceDto>.Fail(StatusCodes.Status404NotFound, (int)ErrorType.UserNotFound);
             }
 
-            Device device = await _deviceRepository.GetDeviceByUserIdAndIdentifierAsync(userId, deviceIdentifier);
+            Device device = await _deviceRepository.GetDeviceByUserIdAndIdentifierAsync(user.Id, deviceIdentifier);
             if (device == null || !device.IsVerified)
             {
                 Random random = new Random();
@@ -57,7 +57,7 @@ namespace WWTBA.Service.Services
                 {
                     device = new Device
                     {
-                        UserId = userId,
+                        UserId = user.Id,
                         DeviceIdentifier = deviceIdentifier,
                         LastLoginDate = DateTime.UtcNow,
                         VerificationCode = verificationCodeHash,
