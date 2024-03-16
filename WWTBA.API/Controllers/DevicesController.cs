@@ -23,7 +23,7 @@ namespace WWTBA.API.Controllers
         [HttpPost("verify")]
         public async Task<IActionResult> VerifyDevice(VerifyDeviceDto verifyDeviceDto)
         {
-            CustomResponseDto<bool> result = await _deviceService.VerifyDeviceAsync(verifyDeviceDto.UserId,
+            CustomResponseDto<bool> result = await _deviceService.VerifyDeviceAsync(verifyDeviceDto.Email,
                 verifyDeviceDto.DeviceIdentifier, verifyDeviceDto.VerificationCode);
             return CreateActionResult(result);
         }

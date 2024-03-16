@@ -82,9 +82,15 @@ namespace WWTBA.Service.Services
             return CustomResponseDto<DeviceDto>.Success(StatusCodes.Status200OK);
         }
 
-        public async Task<CustomResponseDto<bool>> VerifyDeviceAsync(int userId, string deviceIdentifier, string verificationCode)
+        public async Task<CustomResponseDto<bool>> VerifyDeviceAsync(string email, string deviceIdentifier, string verificationCode)
         {
-            Device device = await _deviceRepository.GetDeviceByUserIdAndIdentifierAsync(userId, deviceIdentifier);
+            User user = await _userRepository.GetByEmailAsync(email);
+            if (user == null)
+            {
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status404NotFound, (int)ErrorType.UserNotFound);
+            }
+            
+            Device device = await _deviceRepository.GetDeviceByUserIdAndIdentifierAsync(user.Id, deviceIdentifier);
             if (device == null)
             {
                 return CustomResponseDto<bool>.Fail(StatusCodes.Status404NotFound, (int)ErrorType.DeviceNotFound);
