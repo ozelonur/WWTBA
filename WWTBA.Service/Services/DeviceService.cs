@@ -119,5 +119,16 @@ namespace WWTBA.Service.Services
 
             return CustomResponseDto<DeviceDto>.Success(StatusCodes.Status201Created, dto);
         }
+
+        public async Task<CustomResponseDto<bool>> IsDeviceRegistered(DeviceCreateDto deviceDto)
+        {
+            IEnumerable<Device> devices = await _deviceRepository.GetDevicesByUserIdAsync(deviceDto.UserId);
+            if (devices == null || !devices.Any() || devices.All(x => x.DeviceIdentifier != deviceDto.DeviceIdentifier))
+            {
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status404NotFound,
+                    (int)ErrorType.DeviceNotFoundForUser);
+            }
+            return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, true);
+        }
     }
 }

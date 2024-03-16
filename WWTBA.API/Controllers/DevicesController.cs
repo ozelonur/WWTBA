@@ -44,5 +44,12 @@ namespace WWTBA.API.Controllers
                 sendVerificationCodeToDeviceDto.Email);
             return CreateActionResult(result);
         }
+
+        [HttpPost("is-device-registered")]
+        public async Task<IActionResult> IsDeviceRegistered(DeviceCreateDto dto)
+        {
+            CustomResponseDto<bool> result = await _deviceService.IsDeviceRegistered(dto);
+            return CreateActionResult(result);
+        }
     }
 }
