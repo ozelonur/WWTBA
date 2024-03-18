@@ -46,12 +46,14 @@ namespace WWTBA.Service.Services
         {
             if (await _userRepository.AnyAsync(u => u.Username == dto.Username))
             {
-                return CustomResponseDto<UserDto>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.UsernameAlreadyTaken);
+                return CustomResponseDto<UserDto>.Fail(StatusCodes.Status400BadRequest,
+                    (int)ErrorType.UsernameAlreadyTaken);
             }
 
             if (await _userRepository.AnyAsync(u => u.Email == dto.Email))
             {
-                return CustomResponseDto<UserDto>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.EmailAlreadyRegistered);
+                return CustomResponseDto<UserDto>.Fail(StatusCodes.Status400BadRequest,
+                    (int)ErrorType.EmailAlreadyRegistered);
             }
 
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
@@ -97,9 +99,13 @@ namespace WWTBA.Service.Services
             await _unitOfWork.CommitAsync();
 
             string mailSubject = "Mail Adresinizi doğrulayın";
-            await _emailService.SendEmailAsync(email, mailSubject, verificationCode, MailType.VerificationCode);
+            bool emailSent =
+                await _emailService.SendEmailAsync(email, mailSubject, verificationCode, MailType.VerificationCode);
 
-            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
+            return !emailSent
+                ? CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status500InternalServerError,
+                    (int)ErrorType.EmailSendFailed)
+                : CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
 
 
@@ -119,7 +125,8 @@ namespace WWTBA.Service.Services
             TimeSpan timeSinceCodeCreated = DateTime.UtcNow - codeCreationTime;
             if (timeSinceCodeCreated.TotalMinutes > user.EmailVerificationCodeValidityDurationInMinutes)
             {
-                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.VerificationCodeExpired);
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest,
+                    (int)ErrorType.VerificationCodeExpired);
             }
 
             user.IsEmailVerified = true;
@@ -143,20 +150,22 @@ namespace WWTBA.Service.Services
         public async Task<CustomResponseDto<bool>> IsPasswordResetCodeValid(string email, string verificationCode)
         {
             User user = await _userRepository.Where(x => x.Email == email).FirstOrDefaultAsync();
-            
+
             if (user == null || !BCrypt.Net.BCrypt.Verify(verificationCode, user.PasswordResetCode))
             {
-                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.InvalidPasswordResetCode);
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest,
+                    (int)ErrorType.InvalidPasswordResetCode);
             }
-            
+
             DateTime codeCreationTime = user.PasswordResetCodeCreatedAt ?? DateTime.UtcNow;
             TimeSpan timeSinceCodeCreated = DateTime.UtcNow - codeCreationTime;
-            
+
             if (timeSinceCodeCreated.TotalMinutes > user.PasswordResetCodeValidityDurationInMinutes)
             {
-                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest, (int)ErrorType.PasswordResetCodeExpired);
+                return CustomResponseDto<bool>.Fail(StatusCodes.Status400BadRequest,
+                    (int)ErrorType.PasswordResetCodeExpired);
             }
-            
+
             return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, true);
         }
 
@@ -178,9 +187,13 @@ namespace WWTBA.Service.Services
             _userRepository.Update(user);
             await _unitOfWork.CommitAsync();
             string subject = "Parola sıfırlama kodunuz";
-            await _emailService.SendEmailAsync(email, subject, resetCode, MailType.PasswordResetCode);
+            bool emailSent =
+                await _emailService.SendEmailAsync(email, subject, resetCode, MailType.PasswordResetCode);
 
-            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
+            return !emailSent
+                ? CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status500InternalServerError,
+                    (int)ErrorType.EmailSendFailed)
+                : CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
 
 
@@ -223,7 +236,8 @@ namespace WWTBA.Service.Services
             bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash);
             if (!isValidPassword)
             {
-                return CustomResponseDto<TokenDto>.Fail(StatusCodes.Status401Unauthorized, (int)ErrorType.InvalidPassword);
+                return CustomResponseDto<TokenDto>.Fail(StatusCodes.Status401Unauthorized,
+                    (int)ErrorType.InvalidPassword);
             }
 
             Dictionary<string, string> claims = new Dictionary<string, string>

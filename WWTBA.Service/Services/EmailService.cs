@@ -16,36 +16,44 @@ namespace WWTBA.Service.Services
             _smtpSettings = smtpSettings.Value;
         }
 
-        public async Task SendEmailAsync(string to, string subject, string verificationCode, MailType mailType)
+        public async Task<bool> SendEmailAsync(string to, string subject, string verificationCode, MailType mailType)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            string emailTemplatePath = Path.Combine(Directory.GetCurrentDirectory(), "HTML", "EmailTemplate.html");
-            string emailTemplate = await File.ReadAllTextAsync(emailTemplatePath);
-
-            string mailBody = mailType switch
+            try
             {
-                MailType.VerificationCode => string.Format(emailTemplate, verificationCode,
-                    GlobalVariables.verificationCodeHTMLMessage),
-                MailType.PasswordResetCode => string.Format(emailTemplate, verificationCode,
-                    GlobalVariables.resetPasswordCodeHTMLMessage),
-                MailType.DeviceVerificationCode => string.Format(emailTemplate, verificationCode,
-                    GlobalVariables.verificationCodeDeviceHTMLMessage),
-                _ => throw new ArgumentOutOfRangeException(nameof(mailType), mailType, null)
-            };
-            using SmtpClient smtpClient = new SmtpClient(_smtpSettings.Server, _smtpSettings.Port);
-            smtpClient.Credentials = new NetworkCredential(_smtpSettings.Username, _smtpSettings.Password);
-            smtpClient.EnableSsl = _smtpSettings.EnableSSL;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                string emailTemplatePath = Path.Combine(Directory.GetCurrentDirectory(), "HTML", "EmailTemplate.html");
+                string emailTemplate = await File.ReadAllTextAsync(emailTemplatePath);
 
-            MailMessage mailMessage = new MailMessage
+                string mailBody = mailType switch
+                {
+                    MailType.VerificationCode => string.Format(emailTemplate, verificationCode,
+                        GlobalVariables.verificationCodeHTMLMessage),
+                    MailType.PasswordResetCode => string.Format(emailTemplate, verificationCode,
+                        GlobalVariables.resetPasswordCodeHTMLMessage),
+                    MailType.DeviceVerificationCode => string.Format(emailTemplate, verificationCode,
+                        GlobalVariables.verificationCodeDeviceHTMLMessage),
+                    _ => throw new ArgumentOutOfRangeException(nameof(mailType), mailType, null)
+                };
+                using SmtpClient smtpClient = new SmtpClient(_smtpSettings.Server, _smtpSettings.Port);
+                smtpClient.Credentials = new NetworkCredential(_smtpSettings.Username, _smtpSettings.Password);
+                smtpClient.EnableSsl = _smtpSettings.EnableSSL;
+
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_smtpSettings.SenderEmail, _smtpSettings.SenderName),
+                    Subject = subject,
+                    Body = mailBody,
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(to);
+
+                await smtpClient.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception ex)
             {
-                From = new MailAddress(_smtpSettings.SenderEmail, _smtpSettings.SenderName),
-                Subject = subject,
-                Body = mailBody,
-                IsBodyHtml = true,
-            };
-            mailMessage.To.Add(to);
-
-            await smtpClient.SendMailAsync(mailMessage);
+                return false;
+            }
         }
     }
 }

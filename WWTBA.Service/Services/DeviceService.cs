@@ -75,9 +75,13 @@ namespace WWTBA.Service.Services
                 }
                 await _unitOfWork.CommitAsync();
                 
-                await _emailService.SendEmailAsync(email, "Cihaz Doğrulama Kodu", verificationCode, MailType.DeviceVerificationCode);
+                bool emailSent =
+                    await _emailService.SendEmailAsync(email, "Cihaz Doğrulama Kodu", verificationCode, MailType.DeviceVerificationCode);
 
-                return CustomResponseDto<DeviceDto>.Success(StatusCodes.Status200OK);
+                return !emailSent
+                    ? CustomResponseDto<DeviceDto>.Fail(StatusCodes.Status500InternalServerError,
+                        (int)ErrorType.EmailSendFailed)
+                    : CustomResponseDto<DeviceDto>.Success(StatusCodes.Status200OK);
             }
 
             return CustomResponseDto<DeviceDto>.Success(StatusCodes.Status200OK);

@@ -14,7 +14,8 @@ namespace WWTBA.Core.Enums
         DeviceNotFound = 9,
         InvalidOrExpiredDeviceVerificationCode = 10,
         InvalidRefreshToken = 11,
-        NoRefreshTokenForUser = 12
+        NoRefreshTokenForUser = 12,
+        EmailSendFailed = 13
     }
 }
 
