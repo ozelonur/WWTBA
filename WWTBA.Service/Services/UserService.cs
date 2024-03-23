@@ -248,7 +248,7 @@ namespace WWTBA.Service.Services
             await _unitOfWork.CommitAsync();
 
             // Optionally, send a verification email to the new email address
-            await SendVerificationEmailAsync(newEmail);
+            // await SendVerificationEmailAsync(newEmail);
 
             // Return success
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
