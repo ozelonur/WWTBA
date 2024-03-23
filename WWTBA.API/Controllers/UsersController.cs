@@ -121,5 +121,13 @@ namespace WWTBA.API.Controllers
                 await _userService.ResetPasswordAsync(dto.Email, dto.PasswordResetCode, dto.NewPassword);
             return CreateActionResult(result);
         }
+        
+        [HttpPost("update-email")]
+        public async Task<IActionResult> UpdateEmail(UpdateEmailDto dto)
+        {
+            CustomResponseDto<NoContentDto> result = await _userService.UpdateEmailAsync(dto.Id, dto.Email);
+            return CreateActionResult(result);
+        }
+
     }
 }

@@ -224,6 +224,37 @@ namespace WWTBA.Service.Services
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
         }
 
+        public async Task<CustomResponseDto<NoContentDto>> UpdateEmailAsync(int userId, string newEmail)
+        {
+            // Check if the new email is already in use
+            if (await _userRepository.AnyAsync(u => u.Email == newEmail))
+            {
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest, 
+                    (int)ErrorType.EmailAlreadyRegistered);
+            }
+
+            // Retrieve the user by ID
+            User user = await _userRepository.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return CustomResponseDto<NoContentDto>.Fail(StatusCodes.Status404NotFound, 
+                    (int)ErrorType.UserNotFound);
+            }
+
+            // Update the user's email
+            user.Email = newEmail;
+            user.IsEmailVerified = false; // Reset email verification status
+            _userRepository.Update(user);
+            await _unitOfWork.CommitAsync();
+
+            // Optionally, send a verification email to the new email address
+            await SendVerificationEmailAsync(newEmail);
+
+            // Return success
+            return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status200OK);
+        }
+
+
 
         public async Task<CustomResponseDto<TokenDto>> LoginAsync(LoginDto loginDto)
         {

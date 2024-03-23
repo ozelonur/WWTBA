@@ -27,12 +27,12 @@ namespace WWTBA.Repository.Repositories
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-            return _dbSet.Where(expression);
+            return _dbSet.AsNoTracking().Where(expression);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
         {
-            return await _dbSet.AnyAsync(expression);
+            return await _dbSet.AsNoTracking().AnyAsync(expression);
         }
 
         public async Task AddAsync(T entity)

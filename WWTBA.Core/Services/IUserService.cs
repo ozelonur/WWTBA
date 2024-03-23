@@ -21,5 +21,7 @@ namespace WWTBA.Core.Services
 
         Task<CustomResponseDto<NoContentDto>> ResetPasswordAsync(string email, string passwordResetCode,
             string newPassword);
+
+        Task<CustomResponseDto<NoContentDto>> UpdateEmailAsync(int id, string email);
     }
 }
