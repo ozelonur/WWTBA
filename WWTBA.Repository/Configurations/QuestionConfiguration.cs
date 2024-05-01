@@ -11,7 +11,6 @@ namespace WWTBA.Repository.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(x => x.QuestionText).IsRequired();
-            builder.Property(x => x.Explanation).IsRequired();
 
             builder.ToTable("Questions");
 

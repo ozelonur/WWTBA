@@ -10,7 +10,6 @@
     <tr>
         <td>Id</td>
         <td>Question</td>
-        <td>Explanation</td>
         <td>Created Date</td>
         <td>Actions</td>
     </tr>
@@ -22,7 +21,6 @@
         <tr>
             <td class="custom-dark-blue text-white">@item.Id</td>
             <td class="custom-dark-blue text-white">@item.QuestionText</td>
-            <td class="custom-dark-blue text-white">@item.Explanation</td>
             <td class="custom-dark-blue text-white">@item.CreatedDate</td>
             <td>
                 <a class="btn btn-warning custom-dark-blue text-white" asp-controller="Question" asp-action="Update" asp-route-id="@item.Id">Update</a>
